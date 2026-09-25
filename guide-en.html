@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<title>Study Planner Guide</title>
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#fff7fa; --surface:#ffffff; --surface2:#f7eef6; --ink:#463b58; --ink2:#8c809e; --line:#f0e1ec;
+  --accent:#8f6fd0; --onaccent:#ffffff; --accent-soft:#eee6fb; --pink:#f29bb7; --warn:#e0674f; --warn-bg:#fff0ea;
+  --hero1:#fde2ec; --hero2:#e9e1fb; --shadow:0 2px 10px rgba(143,111,208,.08);
+  font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    color-scheme:dark;
+    --bg:#1d1a24; --surface:#27232f; --surface2:#312c3b; --ink:#f3edf8; --ink2:#b5aac4; --line:#3b3547;
+    --accent:#c3a8f0; --onaccent:#1d1a24; --accent-soft:#372e4a; --pink:#f5a9c1; --warn:#ff9a84; --warn-bg:#3d2724;
+    --hero1:#3a2a36; --hero2:#2e2842; --shadow:none;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:inherit;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px)}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px calc(48px + env(safe-area-inset-bottom,0px))}
+.back{position:sticky;top:0;z-index:3;background:var(--bg);padding-block:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line)}
+.back a{color:var(--ink);font-weight:700;text-decoration:none;background:var(--surface);box-shadow:var(--shadow);border-radius:999px;padding:6px 14px;font-size:14px}
+.back span{font-size:12px;color:var(--ink2);letter-spacing:.1em}
+.hero{margin-top:18px;border-radius:24px;padding:20px;background:linear-gradient(120deg,var(--hero1),var(--hero2));display:flex;gap:14px;align-items:center}
+.hero img{width:64px;height:64px;border-radius:16px;flex:none}
+h1{margin:0;font-size:clamp(23px,6.4vw,28px);font-weight:800;line-height:1.3;text-wrap:balance}
+.lead{margin:2px 0 0;font-size:14px;color:var(--ink2)}
+nav.toc{background:var(--surface);box-shadow:var(--shadow);border-radius:20px;padding:14px 18px;margin:16px 0 4px}
+nav.toc b{font-size:12px;color:var(--ink2);letter-spacing:.12em}
+nav.toc ol{margin:6px 0 0;padding-left:1.4em;display:grid;gap:1px}
+nav.toc a{color:var(--ink);text-decoration:none;font-weight:700}
+h2{font-size:19px;font-weight:800;margin:34px 0 12px;display:flex;gap:10px;align-items:center;scroll-margin-top:60px;text-wrap:balance}
+h2 .no{display:inline-grid;place-items:center;min-width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--accent));color:#fff;font-size:14px;flex:none}
+h3{font-size:16px;font-weight:800;margin:20px 0 6px}
+p{margin:0 0 12px}
+.steps{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:8px;counter-reset:s}
+.steps li{counter-increment:s;background:var(--surface);box-shadow:var(--shadow);border-radius:16px;padding:10px 14px 10px 50px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:14px;top:12px;width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:800;font-size:13px;display:grid;place-items:center}
+.steps li small{display:block;color:var(--ink2);font-size:13px;line-height:1.6;margin-top:2px}
+.box{background:var(--surface);box-shadow:var(--shadow);border-radius:16px;padding:12px 16px;margin:0 0 14px}
+.warnbox{background:var(--warn-bg);border-radius:16px;padding:12px 16px;margin:0 0 14px}
+.warnbox b{color:var(--warn)}
+.ui{display:inline-block;font-weight:700;background:var(--accent-soft);border-radius:999px;padding:0 9px;line-height:1.7;font-size:.92em;white-space:nowrap}
+.url{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:var(--surface2);border-radius:6px;padding:0 5px;word-break:break-all}
+table.t{border-collapse:separate;border-spacing:0;width:100%;font-size:14px;margin:0 0 14px;background:var(--surface);box-shadow:var(--shadow);border-radius:16px;overflow:hidden}
+.t th,.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.t th{white-space:nowrap;background:var(--surface2);font-weight:700;width:6.8em}
+.t tr:last-child th,.t tr:last-child td{border-bottom:0}
+dl.faq{margin:0}
+dl.faq dt{font-weight:800;margin-top:16px}
+dl.faq dt::before{content:"Q. ";color:var(--pink)}
+dl.faq dd{margin:4px 0 0}
+.share{display:inline-block;width:1.1em;height:1.1em;vertical-align:-.15em}
+footer{margin-top:40px;color:var(--ink2);font-size:12px;letter-spacing:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="back"><a href="index.html">‹ Back to app</a><a href="guide.html" style="font-size:13px">日本語</a></div>
+
+  <div class="hero"><img src="icon-180.png" alt=""><div><h1>How to use Study Planner</h1><p class="lead">Daily tasks, assignments, test prep and study time, all in one app</p></div></div>
+
+  <nav class="toc" aria-label="Contents"><b>CONTENTS</b><ol>
+    <li><a href="#setup">Publish the app (once, on a computer)</a></li>
+    <li><a href="#iphone">Add it to your iPhone Home Screen</a></li>
+    <li><a href="#subjects">Set up subjects and colors</a></li>
+    <li><a href="#weekly">Add weekly tasks</a></li>
+    <li><a href="#today">The Today screen</a></li>
+    <li><a href="#tasks">Assignments with due dates</a></li>
+    <li><a href="#test">Tests and study plans</a></li>
+    <li><a href="#time">Log your study time</a></li>
+    <li><a href="#record">The Stats screen</a></li>
+    <li><a href="#backup">Backup and changing phones</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ol></nav>
+
+  <h2 id="setup"><span class="no">1</span>Publish the app (once, on a computer)</h2>
+  <p>The app is published with GitHub Pages. Create a <b>separate repository</b> from the homework notebook app.</p>
+  <ol class="steps">
+    <li>Unzip <b>study-planner.zip</b>.<small>It contains 8 files: index.html, guide.html, guide-en.html, sw.js, manifest.webmanifest and 3 icon images.</small></li>
+    <li>On GitHub, click <span class="ui">＋</span> → "New repository". Name it <b>study-planner</b>, choose <b>Public</b>, and create it.</li>
+    <li>Click "uploading an existing file", drag all 8 files in, and click "Commit changes".<small>Drag the files inside the folder, not the folder itself.</small></li>
+    <li>Go to "Settings" → "Pages". Set Branch to <b>main</b> and the folder to <b>/ (root)</b>, then click "Save".</li>
+    <li>After a few minutes, the Pages screen shows <span class="url">https://your-name.github.io/study-planner/</span>. Send this address to the person who will use the app.</li>
+  </ol>
+  <div class="box">Only the empty app is published. Your subjects, tasks and study time are saved only on your own iPhone.</div>
+
+  <h2 id="iphone"><span class="no">2</span>Add it to your iPhone Home Screen</h2>
+  <ol class="steps">
+    <li>Open the address in <b>Safari</b>.</li>
+    <li>Tap the Share button <svg class="share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Share button"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5"/><path d="M6 11H5v10h14V11h-1"/></svg> → "Add to Home Screen".<small>If you see "Open as Web App", turn it on.</small></li>
+    <li>Tap "Add". A "Study" icon appears on your Home Screen.</li>
+    <li>Close Safari and open the app <b>from the icon</b>.</li>
+  </ol>
+  <div class="warnbox"><b>Don't start using it in Safari.</b><br>Safari and the Home Screen icon keep separate data.</div>
+  <p>The first screen lets you choose the language (日本語 / English) and start with examples or start empty. Examples are marked "(ex.)" so you can edit or delete them later. You can change the language anytime in Settings.</p>
+
+  <h2 id="subjects"><span class="no">3</span>Set up subjects and colors</h2>
+  <ol class="steps">
+    <li>Tap <span class="ui">Settings</span> → "Subjects &amp; colors".</li>
+    <li>Tap <span class="ui">＋ Add subject</span>, type a name and pick one of 12 pastel colors.<small>"Pick any color" lets you choose any color you like.</small></li>
+    <li>Tap a subject to rename it, change its color or delete it.</li>
+  </ol>
+
+  <h2 id="weekly"><span class="no">4</span>Add weekly tasks</h2>
+  <p>For tasks that repeat every week, like vocabulary or worksheets. Go to <span class="ui">Settings</span> → "Weekly tasks" → <span class="ui">＋ Add weekly task</span>.</p>
+  <table class="t">
+    <tr><th>Set days</th><td>Choose the days you do it (all days for every day). It shows under "To do today" on those days.</td></tr>
+    <tr><th>Set deadline</th><td>No fixed day, just "by this weekday every week". It shows under "Due this week" from the start of the week, and disappears for that week once done.</td></tr>
+    <tr><th>Off during tests</th><td>When on, the task is hidden from a few days before a test until its last day, so you can focus on test prep. Change how many days in Settings → "Test period".</td></tr>
+  </table>
+
+  <h2 id="today"><span class="no">5</span>The Today screen</h2>
+  <table class="t">
+    <tr><th>Top</th><td>Days left until your next test. Tap it to open that test.</td></tr>
+    <tr><th>Study time</th><td>Today's total study time and time per subject.</td></tr>
+    <tr><th>To do today</th><td>Grouped into "Daily tasks", "Due this week" and "Due soon (within 7 days)". Tap the circle to mark it done.</td></tr>
+    <tr><th>Done</th><td>What you finished today. Tap "Undo" if you made a mistake.</td></tr>
+  </table>
+  <p>Tap <span class="ui">⋯</span> to skip a weekly task for today, or to edit or delete an assignment. Use ‹ › at the top to see other days.</p>
+
+  <h2 id="tasks"><span class="no">6</span>Assignments with due dates</h2>
+  <p>For things due on a specific date, like "lab report due Oct 3". Add them with <span class="ui">＋ Add task</span> on the Today or Plan screen.</p>
+  <ol class="steps">
+    <li>Choose a subject, then enter what to do and the due date.</li>
+    <li>It appears under "To do today" from 7 days before it's due. See all assignments under "Assignments" in <span class="ui">Plan</span>.</li>
+    <li>It shows "Due tomorrow" the day before, "Due today" on the day, and "Overdue" after.</li>
+  </ol>
+
+  <h2 id="test"><span class="no">7</span>Tests and study plans</h2>
+  <h3>Add a test</h3>
+  <ol class="steps">
+    <li>Tap <span class="ui">Plan</span> → <span class="ui">＋ Add test</span>.</li>
+    <li>Enter the test name, first day and last day.</li>
+    <li>For each subject, enter the exam date and scope (textbook or workbook pages). Only fill in the subjects you know.</li>
+  </ol>
+  <h3>Make a study plan</h3>
+  <p>The test screen lists the scope and study plan for each subject. Use <span class="ui">＋ Add to study plan</span> to add items like "Workbook p.20–35" with a due date. The due date starts as the day before that subject's exam. Study plan items also show up in "To do today" as they get close.</p>
+  <p>The top of the test screen shows days left and how much of your plan is done. Tap "Edit" to update the scope.</p>
+
+  <h2 id="time"><span class="no">8</span>Log your study time</h2>
+  <table class="t">
+    <tr><th>With the timer</th><td>Tap <span class="ui">▶ Start</span> on the Today screen and choose a subject. Tap <span class="ui">Stop</span> when you finish to log it. The timer keeps running even if you close the app.</td></tr>
+    <tr><th>Afterwards</th><td>Tap <span class="ui">＋ Log</span> and enter the subject and minutes. The "+30m", "+1h" buttons add time. Change the date to log a past day.</td></tr>
+  </table>
+
+  <h2 id="record"><span class="no">9</span>The Stats screen</h2>
+  <p><span class="ui">Stats</span> shows your study time for the week as a chart by day. Tap a bar to see that day by subject. Below it are the totals per subject and how many daily tasks you completed. Use ‹ › to see past weeks.</p>
+
+  <h2 id="backup"><span class="no">10</span>Backup and changing phones</h2>
+  <p>Your data lives only on your iPhone, so save a backup now and then. If it's been 2 weeks since the last one, a reminder shows on the Today screen.</p>
+  <ol class="steps">
+    <li><span class="ui">Settings</span> → <span class="ui">Save backup</span> → "Save to Files" (iCloud Drive, etc.).</li>
+    <li>On a new iPhone, add the app to the Home Screen, then tap <span class="ui">Restore</span> and choose the backup file.</li>
+  </ol>
+  <div class="warnbox"><b>Restoring replaces the data currently on that iPhone with the backup.</b></div>
+
+  <h2 id="faq"><span class="no">11</span>FAQ</h2>
+  <dl class="faq">
+    <dt>Is old data deleted automatically?</dt>
+    <dd>The app never deletes it. But data can be lost if you delete the Home Screen icon or clear Safari's history and website data in iPhone Settings. A backup lets you get it back.</dd>
+    <dt>Does it work offline?</dt>
+    <dd>Yes, after you've opened it once from the icon.</dd>
+    <dt>Can someone see my data if they know the address?</dt>
+    <dd>No. Your data is only on your iPhone.</dd>
+    <dt>What happens when the app is updated?</dt>
+    <dd>Upload the new files to the study-planner repository on GitHub. Your data stays. Close and reopen the app to see the new version.</dd>
+  </dl>
+  <footer>STUDY PLANNER</footer>
+</div>
+</body>
+</html>

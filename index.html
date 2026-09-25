@@ -217,25 +217,145 @@ h2.sec .cnt{font-size:13px;color:var(--ink2);font-weight:700;margin-left:auto}
 <script>
 (function(){
 "use strict";
+/* ---------- language ---------- */
+const STR = {
+ja:{
+  dow:["日","月","火","水","木","金","土"],
+  today:"今日", plan:"予定", record:"記録", settings:"設定",
+  eyeToday:"TODAY", eyeDay:"DAY",
+  prevDay:"前の日", nextDay:"次の日", prevWeek:"前の週", nextWeek:"次の週", goToday:"今日へ", goThisWeek:"今週へ", thisWeek:"今週",
+  testPeriod:"テスト期間",
+  noTest:"次のテストは未登録", noTestSub:"「予定」からテストを追加できます",
+  from:"{d}から", left:"あと", daysUnit:"日", inTest:"テスト中", dayN:"{n}日目",
+  studying:"を勉強中", finish:"おわり", cancel:"取り消し", todayTime:"今日の勉強時間", start:"▶ はじめる", addRec:"＋ 記録",
+  doneOf:"/ {n} 完了",
+  todoToday:"今日すること", todoDay:"この日すること", items:"{n}件",
+  allDone:"ぜんぶ完了！おつかれさま", noPlans:"予定はありません",
+  gDaily:"毎日の課題", gWeekly:"今週中にすること", gSoon:"期限が近いもの（1週間以内）", gThisDay:"この日が期限のもの",
+  moreTasks:"ほかに {n}件の課題があります ›", addTask:"＋ 課題を追加",
+  doneList:"完了したもの", none:"まだありません", undo:"戻す", skipped:"休みにしたもの", thisWeekTag:"（今週）",
+  skipToday:"今日は休みにする", skipWeek:"今週は休みにする", edit:"編集", del:"削除", reallyDel:"本当に削除", more:"その他の操作",
+  dueBy:"{d}まで", overdue:"期限切れ {d}", dueToday:"今日まで", dueTomorrow:"明日まで", daysLeft:"あと{n}日・{d}",
+  badgeLeft:"あと{n}日", badgeNow:"テスト中", badgeEnd:"終了", planProg:"勉強計画 {a}/{b}",
+  eyePlan:"PLAN", planTitle:"予定", planSub:"テストと提出物", tests:"テスト", noTests:"予定しているテストはありません", addTest:"＋ テストを追加",
+  assignments:"提出物・課題", noAssign:"期限つきの課題はありません", recentDone:"最近完了した課題", pastTests:"終わったテスト",
+  eyeTest:"TEST", backPlan:"予定に戻る", editTest:"テストを編集", untilTest:"テストまで", during:"テスト期間中", over:"テストは終わりました", planDone:"勉強計画 {a}/{b} 完了", goodJob:"おつかれさま",
+  rangesPlans:"教科ごとの範囲と勉強計画", noRanges:"「編集」から教科ごとの試験日と範囲を入れてください", examDay:"試験日 {d}", addPlan:"＋ 勉強計画を追加", addPlanPick:"＋ 勉強計画を追加（教科を選ぶ）",
+  eyeRec:"RECORD", weekTime:"1週間の勉強時間", chartLabel:"曜日ごとの勉強時間", noRec:"記録なし", tapBar:"棒をタップすると、その日の教科ごとの時間が見られます",
+  bySubj:"教科ごとの時間", noWeekRec:"この週の記録はまだありません。今日の画面の「はじめる」で時間を記録できます。",
+  achieve:"課題の達成", dailyTasks:"毎日の課題", datedDone:"期限つきの課題を <b class=\"num\">{n}</b> 件完了",
+  eyeSet:"SETTINGS", guide:"使い方を見る", subjColors:"教科と色", addSubjFirst:"教科を追加してください", addSubj:"＋ 教科を追加",
+  weekly:"毎週の課題", weeklyHint:"曜日が決まっている課題（英単語、課題プリントなど）や、「○曜日までに」出す課題を登録します。", addWeekly:"＋ 毎週の課題を追加",
+  everyday:"毎日", everyWeekBy:"毎週{d}曜まで", pausedTest:" ・ テスト期間は休み",
+  other:"その他", nameLabel:"名前（画面の上に表示）", optional:"なくてもOK", prepLabel:"テスト期間（「テスト期間は休み」にした課題が休みになる期間）", prepOpt:"テストの{n}日前から",
+  weekStart:"週の始まり", mon:"月曜日", sun:"日曜日", language:"言語 / Language",
+  backup:"バックアップ", backupText:"記録はこのiPhoneの中だけに保存されています。ときどきバックアップを保存しておくと安心です。機種変更のときもこのファイルを使います。",
+  lastBackup:"前回のバックアップ：", lastBackupVal:"{d}（{n}日前）", never:"まだありません", saveBackup:"バックアップを保存", restore:"復元する", resetAll:"すべてのデータを消す", resetSure:"本当にすべて消す", storageNg:"このブラウザでは保存ができない設定になっています。",
+  bnHome:"<b>ホーム画面に追加してから使ってね</b><br>Safariのままだと記録が別々になります。共有ボタン →「ホーム画面に追加」",
+  bnBackup:"<b>バックアップしよう</b><br>{t}", bnNever:"まだ一度も保存していません", bnDays:"前回から{n}日たっています", save:"保存",
+  welcome:"WELCOME", setupText:"毎日の課題、提出物の期限、テストまでの勉強計画と勉強時間を、ひとつにまとめて管理できます。",
+  startSample:"例を入れてはじめる", startBlank:"空の状態ではじめる", restoreBackup:"バックアップから復元", sampleNote:"例には「（例）」と付いています。教科や課題はあとで自由に変えられます。",
+  bnHomeFirst:"<b>先にホーム画面に追加してね</b><br>共有ボタン →「ホーム画面に追加」。追加したアイコンから開いてはじめます。",
+  lt1min:"1分未満なので記録しませんでした", recorded:"{s} {m} を記録しました",
+  pickSubjFirst:"先に「設定」で教科を追加してください",
+  delSure:"本当に削除する", saveBtn:"保存", cancelBtn:"キャンセル",
+  subjEdit:"教科を編集", subjAdd:"教科を追加", subjName:"教科名", subjPh:"例：数学Ⅱ、コミュ英", color:"色", freeColor:"好きな色を選ぶ", preview:"プレビュー", subjNamePh:"教科名",
+  subjUsedNote:"この教科を使っている課題は「未設定」になります。", subjDel:"この教科を削除", unset:"未設定",
+  rEdit:"毎週の課題を編集", rAdd:"毎週の課題を追加", subject:"教科", content:"内容", rPh:"例：英単語、数学 課題プリント", memoAmt:"メモ（範囲・量など）", memoPh:"例：50語",
+  howDays:"する日の決め方", byDays:"曜日を決める", byDue:"期限を決める", dueWeekly:"期限（毎週この曜日までにする）", dueWeeklyNote:"週の初めから期限まで「今週中にすること」に表示されます。", pickDays:"する日を選択",
+  pauseLabel:"テスト期間は休みにする", pauseNote:"テストの{n}日前からテスト最終日まで表示しません。", rDel:"この課題を削除",
+  tEdit:"課題を編集", tAddPlan:"勉強計画を追加", tAdd:"課題を追加", tPh:"例：レポート提出、ワーク p.20〜35", memo:"メモ", due:"期限", asPlan:"テストの勉強計画にする", notPlan:"しない（提出物など）",
+  xEdit:"テストを編集", xAdd:"テストを追加", xName:"テスト名", xPh:"例：2学期中間テスト", firstDay:"初日", lastDay:"最終日", rangesLabel:"教科ごとの試験日と範囲（ある教科だけでOK）", examDate:"試験日", range:"範囲", rangePh:"例：教科書 p.40〜78、ワーク p.20〜35", addSubjForRange:"教科を追加すると範囲を入れられます", xDelNote:"このテストの勉強計画もすべて削除されます。", xDel:"このテストを削除",
+  timeTitle:"勉強時間を記録", minutes:"時間（分）", minPh:"例：45", date:"日付",
+  whatStudy:"何を勉強する？", startBtn:"▶ スタート", timerNote:"アプリを閉じても時間は計り続けます。",
+  pickSubj:"教科を選んでね", enterTime:"時間を入れてね", enterDate:"日付を入れてね", addedTime:"{m} 記録しました", enterName:"名前を入れてね",
+  pickDue:"期限の曜日を選んでね", pickDaysMsg:"する日を選んでね", enterDue:"期限を入れてね", enterFirst:"初日を入れてね", saved:"保存しました", deleted:"削除しました",
+  skippedToday:"今日は休みにしました", skippedWeek:"今週は休みにしました", canceled:"取り消しました",
+  backupSaved:"バックアップを保存しました", backupCancel:"保存をやめました", restored:"復元しました", badFile:"このファイルは読み込めませんでした", saveFail:"保存できませんでした",
+  backupName:"StudyPlanner_バックアップ_{d}.json", backupTitle:"Study Plannerのバックアップ", markDone:"{s}を完了にする", guideFile:"guide.html"
+},
+en:{
+  dow:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+  today:"Today", plan:"Plan", record:"Stats", settings:"Settings",
+  eyeToday:"TODAY", eyeDay:"DAY",
+  prevDay:"Previous day", nextDay:"Next day", prevWeek:"Previous week", nextWeek:"Next week", goToday:"Today", goThisWeek:"This week", thisWeek:"This week",
+  testPeriod:"Test period",
+  noTest:"No upcoming test", noTestSub:"Add one in Plan",
+  from:"Starts {d}", left:"in", daysUnit:"days", inTest:"Test week", dayN:"Day {n}",
+  studying:"now studying", finish:"Stop", cancel:"Discard", todayTime:"Study time today", start:"▶ Start", addRec:"＋ Log",
+  doneOf:"/ {n} done",
+  todoToday:"To do today", todoDay:"To do this day", items:"{n}",
+  allDone:"All done! Great work", noPlans:"Nothing planned",
+  gDaily:"Daily tasks", gWeekly:"Due this week", gSoon:"Due soon (within 7 days)", gThisDay:"Due this day",
+  moreTasks:"{n} more tasks ›", addTask:"＋ Add task",
+  doneList:"Done", none:"Nothing yet", undo:"Undo", skipped:"Skipped", thisWeekTag:" (this week)",
+  skipToday:"Skip today", skipWeek:"Skip this week", edit:"Edit", del:"Delete", reallyDel:"Confirm delete", more:"More",
+  dueBy:"Due {d}", overdue:"Overdue {d}", dueToday:"Due today", dueTomorrow:"Due tomorrow", daysLeft:"{n} days · {d}",
+  badgeLeft:"{n} days", badgeNow:"Now", badgeEnd:"Over", planProg:"Study plan {a}/{b}",
+  eyePlan:"PLAN", planTitle:"Plan", planSub:"Tests and assignments", tests:"Tests", noTests:"No tests scheduled", addTest:"＋ Add test",
+  assignments:"Assignments", noAssign:"No assignments with a due date", recentDone:"Recently completed", pastTests:"Past tests",
+  eyeTest:"TEST", backPlan:"Back to Plan", editTest:"Edit test", untilTest:"Until the test", during:"Test in progress", over:"The test is over", planDone:"Study plan {a}/{b} done", goodJob:"Well done",
+  rangesPlans:"Scope and study plan by subject", noRanges:"Tap Edit to add exam dates and scope for each subject", examDay:"Exam {d}", addPlan:"＋ Add to study plan", addPlanPick:"＋ Add to study plan (choose subject)",
+  eyeRec:"STATS", weekTime:"Study time this week", chartLabel:"Study time by day", noRec:"No records", tapBar:"Tap a bar to see that day by subject",
+  bySubj:"Time by subject", noWeekRec:"No records this week yet. Use Start on the Today screen to track your time.",
+  achieve:"Progress", dailyTasks:"Daily tasks", datedDone:"<b class=\"num\">{n}</b> assignments completed",
+  eyeSet:"SETTINGS", guide:"How to use", subjColors:"Subjects & colors", addSubjFirst:"Add your subjects", addSubj:"＋ Add subject",
+  weekly:"Weekly tasks", weeklyHint:"Tasks that repeat every week, on set days (vocab, worksheets) or by a set weekday.", addWeekly:"＋ Add weekly task",
+  everyday:"Every day", everyWeekBy:"Every week by {d}", pausedTest:" · off during tests",
+  other:"Other", nameLabel:"Your name (shown at the top)", optional:"Optional", prepLabel:"Test period (when tasks marked \"off during tests\" are hidden)", prepOpt:"{n} days before the test",
+  weekStart:"Week starts on", mon:"Monday", sun:"Sunday", language:"Language / 言語",
+  backup:"Backup", backupText:"Your data is stored only on this iPhone. Save a backup from time to time. You also use this file when you change phones.",
+  lastBackup:"Last backup: ", lastBackupVal:"{d} ({n} days ago)", never:"Never", saveBackup:"Save backup", restore:"Restore", resetAll:"Erase all data", resetSure:"Really erase everything", storageNg:"This browser is set not to save data.",
+  bnHome:"<b>Add to Home Screen first</b><br>Safari and the Home Screen app keep separate data. Share →  \"Add to Home Screen\"",
+  bnBackup:"<b>Time for a backup</b><br>{t}", bnNever:"You haven't saved one yet", bnDays:"Last backup was {n} days ago", save:"Save",
+  welcome:"WELCOME", setupText:"Keep daily tasks, assignment deadlines, test study plans and study time all in one place.",
+  startSample:"Start with examples", startBlank:"Start empty", restoreBackup:"Restore from backup", sampleNote:"Examples are marked \"(ex.)\". You can change subjects and tasks anytime.",
+  bnHomeFirst:"<b>Add to Home Screen first</b><br>Share → \"Add to Home Screen\", then open the app from the new icon.",
+  lt1min:"Less than 1 minute, not logged", recorded:"Logged {m} of {s}",
+  pickSubjFirst:"Add subjects in Settings first",
+  delSure:"Confirm delete", saveBtn:"Save", cancelBtn:"Cancel",
+  subjEdit:"Edit subject", subjAdd:"Add subject", subjName:"Subject name", subjPh:"e.g. Math II, English", color:"Color", freeColor:"Pick any color", preview:"Preview", subjNamePh:"Subject",
+  subjUsedNote:"Tasks using this subject will become \"No subject\".", subjDel:"Delete this subject", unset:"No subject",
+  rEdit:"Edit weekly task", rAdd:"Add weekly task", subject:"Subject", content:"Task", rPh:"e.g. Vocab, math worksheet", memoAmt:"Note (amount, pages)", memoPh:"e.g. 50 words",
+  howDays:"When", byDays:"Set days", byDue:"Set deadline", dueWeekly:"Deadline (by this day every week)", dueWeeklyNote:"Shows under \"Due this week\" from the start of the week until the deadline.", pickDays:"Choose days",
+  pauseLabel:"Off during tests", pauseNote:"Hidden from {n} days before a test until its last day.", rDel:"Delete this task",
+  tEdit:"Edit task", tAddPlan:"Add to study plan", tAdd:"Add task", tPh:"e.g. Lab report, workbook p.20–35", memo:"Note", due:"Due date", asPlan:"Part of a test study plan", notPlan:"No (assignment, etc.)",
+  xEdit:"Edit test", xAdd:"Add test", xName:"Test name", xPh:"e.g. Midterm exam", firstDay:"First day", lastDay:"Last day", rangesLabel:"Exam date and scope by subject (only the ones you know)", examDate:"Exam date", range:"Scope", rangePh:"e.g. Textbook p.40–78, workbook p.20–35", addSubjForRange:"Add subjects to enter the scope", xDelNote:"The study plan for this test will also be deleted.", xDel:"Delete this test",
+  timeTitle:"Log study time", minutes:"Minutes", minPh:"e.g. 45", date:"Date",
+  whatStudy:"What are you studying?", startBtn:"▶ Start", timerNote:"The timer keeps running even if you close the app.",
+  pickSubj:"Choose a subject", enterTime:"Enter the time", enterDate:"Enter the date", addedTime:"Logged {m}", enterName:"Enter a name",
+  pickDue:"Choose the deadline day", pickDaysMsg:"Choose at least one day", enterDue:"Enter a due date", enterFirst:"Enter the first day", saved:"Saved", deleted:"Deleted",
+  skippedToday:"Skipped for today", skippedWeek:"Skipped for this week", canceled:"Discarded",
+  backupSaved:"Backup saved", backupCancel:"Backup canceled", restored:"Restored", badFile:"This file can't be read", saveFail:"Couldn't save",
+  backupName:"StudyPlanner_backup_{d}.json", backupTitle:"Study Planner backup", markDone:"Mark {s} as done", guideFile:"guide-en.html"
+}};
+const KEY = "study-planner-v1";
+let lang = "ja";
+try { lang = localStorage.getItem(KEY+"-lang") || ((navigator.language||"").toLowerCase().startsWith("ja") ? "ja" : "en"); } catch(e){ lang = (navigator.language||"").toLowerCase().startsWith("ja")?"ja":"en"; }
+if (!STR[lang]) lang="ja";
+function t(k, v){ let s = STR[lang][k]; if (s===undefined) s = STR.ja[k] ?? k; if (v) Object.keys(v).forEach(x=>{ s = s.split("{"+x+"}").join(v[x]); }); return s; }
+function setLang(l){ lang=l; try{ localStorage.setItem(KEY+"-lang",l); }catch(e){} document.documentElement.lang = l; }
+document.documentElement.lang = lang;
+
 /* ---------- constants ---------- */
 const PAL = [
-  {id:"pink",name:"ピンク",b:"#f7c1cf",d:"#e27a98"},
-  {id:"sky",name:"水色",b:"#bfe3f3",d:"#4aa3cc"},
-  {id:"peach",name:"ピーチ",b:"#fbdcaa",d:"#d99a3e"},
-  {id:"lavender",name:"ラベンダー",b:"#d8cdf4",d:"#9278d6"},
-  {id:"mint",name:"ミント",b:"#bfe8d3",d:"#4fae86"},
-  {id:"coral",name:"コーラル",b:"#f9c6b1",d:"#e38a6a"},
-  {id:"blue",name:"ブルー",b:"#c8d5f5",d:"#6b86d6"},
-  {id:"lemon",name:"レモン",b:"#f5e7a3",d:"#bfa12e"},
-  {id:"lilac",name:"ライラック",b:"#ecc9ef",d:"#bf6fc9"},
-  {id:"sage",name:"セージ",b:"#d3e4b6",d:"#86a84c"},
-  {id:"greige",name:"グレージュ",b:"#ddd3ca",d:"#a08b79"},
-  {id:"gray",name:"グレー",b:"#d3d6de",d:"#8a90a2"}
+  {id:"pink",ja:"ピンク",en:"Pink",b:"#f7c1cf",d:"#e27a98"},
+  {id:"sky",ja:"水色",en:"Sky",b:"#bfe3f3",d:"#4aa3cc"},
+  {id:"peach",ja:"ピーチ",en:"Peach",b:"#fbdcaa",d:"#d99a3e"},
+  {id:"lavender",ja:"ラベンダー",en:"Lavender",b:"#d8cdf4",d:"#9278d6"},
+  {id:"mint",ja:"ミント",en:"Mint",b:"#bfe8d3",d:"#4fae86"},
+  {id:"coral",ja:"コーラル",en:"Coral",b:"#f9c6b1",d:"#e38a6a"},
+  {id:"blue",ja:"ブルー",en:"Blue",b:"#c8d5f5",d:"#6b86d6"},
+  {id:"lemon",ja:"レモン",en:"Lemon",b:"#f5e7a3",d:"#bfa12e"},
+  {id:"lilac",ja:"ライラック",en:"Lilac",b:"#ecc9ef",d:"#bf6fc9"},
+  {id:"sage",ja:"セージ",en:"Sage",b:"#d3e4b6",d:"#86a84c"},
+  {id:"greige",ja:"グレージュ",en:"Greige",b:"#ddd3ca",d:"#a08b79"},
+  {id:"gray",ja:"グレー",en:"Gray",b:"#d3d6de",d:"#8a90a2"}
 ];
-const DOW = ["日","月","火","水","木","金","土"];
-const KEY = "study-planner-v1";
+const DOWN = ()=>t("dow");
 
 /* ---------- date helpers ---------- */
+const MON_EN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 function pad(n){ return String(n).padStart(2,"0"); }
 function iso(d){ return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
 function parse(s){ const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); }
@@ -244,48 +364,51 @@ function dow(s){ return parse(s).getDay(); }
 function todayISO(){ return iso(new Date()); }
 function diffDays(a,b){ return Math.round((parse(b)-parse(a))/86400000); }
 function md(s){ const d=parse(s); return `${d.getMonth()+1}/${d.getDate()}`; }
-function mdw(s){ return `${md(s)}（${DOW[dow(s)]}）`; }
-function dateTitle(s){ const d=parse(s); return `${d.getMonth()+1}月${d.getDate()}日（${DOW[d.getDay()]}）`; }
+function mdw(s){ return lang==="en" ? `${DOWN()[dow(s)]} ${md(s)}` : `${md(s)}（${DOWN()[dow(s)]}）`; }
+function dateTitle(s){ const d=parse(s); return lang==="en" ? `${DOWN()[d.getDay()]}, ${MON_EN[d.getMonth()]} ${d.getDate()}` : `${d.getMonth()+1}月${d.getDate()}日（${DOWN()[d.getDay()]}）`; }
 function weekStartOf(s,ws){ return addDays(s, -((dow(s)-ws+7)%7)); }
-function fmtMin(m){ m=Math.round(m||0); const h=Math.floor(m/60), r=m%60; return h ? (r?`${h}時間${r}分`:`${h}時間`) : `${r}分`; }
+function fmtMin(m){ m=Math.round(m||0); const h=Math.floor(m/60), r=m%60; if(lang==="en") return h?(r?`${h}h ${r}m`:`${h}h`):`${r}m`; return h ? (r?`${h}時間${r}分`:`${h}時間`) : `${r}分`; }
 const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const uid = p => (p||"t")+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const clone = o => JSON.parse(JSON.stringify(o));
 
 /* ---------- sample & blank ---------- */
 function sampleData(){
-  const t = todayISO();
-  const S = [["s1","現代文","pink"],["s2","古典","lilac"],["s3","数学Ⅱ","sky"],["s4","数学B","blue"],["s5","英語","lavender"],["s6","論理・表現","peach"],["s7","化学","mint"],["s8","生物","sage"],["s9","日本史","coral"]];
-  const testStart = addDays(t,18), testEnd = addDays(t,21);
+  const td = todayISO(), en = lang==="en", X = en?" (ex.)":"（例）";
+  const S = en
+    ? [["s1","Japanese","pink"],["s2","Classics","lilac"],["s3","Math II","sky"],["s4","Math B","blue"],["s5","English","lavender"],["s6","Writing","peach"],["s7","Chemistry","mint"],["s8","Biology","sage"],["s9","History","coral"]]
+    : [["s1","現代文","pink"],["s2","古典","lilac"],["s3","数学Ⅱ","sky"],["s4","数学B","blue"],["s5","英語","lavender"],["s6","論理・表現","peach"],["s7","化学","mint"],["s8","生物","sage"],["s9","日本史","coral"]];
+  const ts = addDays(td,18), te = addDays(td,21);
+  const L = (ja,e)=> (en?e:ja)+X;
   return {
-    name:"", weekStart:1, prepDays:7, startISO:t, lastBackupISO:"",
+    lang, name:"", weekStart:1, prepDays:7, startISO:td, lastBackupISO:"",
     subjects: S.map(([id,name,color])=>({id,name,color})),
     routines:[
-      {id:"r1",subjectId:"s5",name:"英単語（例）",memo:"ターゲット 50語",mode:"days",days:[0,1,2,3,4,5,6],pauseInTest:false},
-      {id:"r2",subjectId:"s3",name:"数学 課題プリント（例）",memo:"",mode:"days",days:[1,3,5],pauseInTest:true},
-      {id:"r3",subjectId:"s2",name:"古文単語（例）",memo:"",mode:"days",days:[2,4],pauseInTest:false},
-      {id:"r4",subjectId:"s6",name:"英作文の添削提出（例）",memo:"",mode:"due",due:5,days:[],pauseInTest:true}
+      {id:"r1",subjectId:"s5",name:L("英単語","Vocabulary"),memo:en?"50 words":"ターゲット 50語",mode:"days",days:[0,1,2,3,4,5,6],pauseInTest:false},
+      {id:"r2",subjectId:"s3",name:L("数学 課題プリント","Math worksheet"),memo:"",mode:"days",days:[1,3,5],pauseInTest:true},
+      {id:"r3",subjectId:"s2",name:L("古文単語","Classical vocab"),memo:"",mode:"days",days:[2,4],pauseInTest:false},
+      {id:"r4",subjectId:"s6",name:L("英作文の添削提出","Essay for feedback"),memo:"",mode:"due",due:5,days:[],pauseInTest:true}
     ],
     tasks:[
-      {id:"k1",subjectId:"s7",name:"化学 実験レポート提出（例）",memo:"",due:addDays(t,4),testId:"",doneDate:""},
-      {id:"k2",subjectId:"s1",name:"読書感想文（例）",memo:"原稿用紙3枚",due:addDays(t,12),testId:"",doneDate:""},
-      {id:"k3",subjectId:"s3",name:"ワーク p.20〜35（例）",memo:"",due:addDays(testStart,-8),testId:"x1",doneDate:""},
-      {id:"k4",subjectId:"s3",name:"ワーク 2周目・間違えた問題（例）",memo:"",due:addDays(testStart,-2),testId:"x1",doneDate:""},
-      {id:"k5",subjectId:"s5",name:"教科書 L3〜L4 本文暗記（例）",memo:"",due:addDays(testStart,-3),testId:"x1",doneDate:""},
-      {id:"k6",subjectId:"s7",name:"セミナー化学 5章（例）",memo:"",due:addDays(testStart,-5),testId:"x1",doneDate:""}
+      {id:"k1",subjectId:"s7",name:L("化学 実験レポート提出","Chemistry lab report"),memo:"",due:addDays(td,4),testId:"",doneDate:""},
+      {id:"k2",subjectId:"s1",name:L("読書感想文","Book report"),memo:en?"3 pages":"原稿用紙3枚",due:addDays(td,12),testId:"",doneDate:""},
+      {id:"k3",subjectId:"s3",name:L("ワーク p.20〜35","Workbook p.20–35"),memo:"",due:addDays(ts,-8),testId:"x1",doneDate:""},
+      {id:"k4",subjectId:"s3",name:L("ワーク 2周目・間違えた問題","Workbook round 2: missed problems"),memo:"",due:addDays(ts,-2),testId:"x1",doneDate:""},
+      {id:"k5",subjectId:"s5",name:L("教科書 L3〜L4 本文暗記","Memorize Lessons 3–4"),memo:"",due:addDays(ts,-3),testId:"x1",doneDate:""},
+      {id:"k6",subjectId:"s7",name:L("セミナー化学 5章","Chemistry workbook ch.5"),memo:"",due:addDays(ts,-5),testId:"x1",doneDate:""}
     ],
     tests:[
-      {id:"x1",name:"2学期中間テスト（例）",start:testStart,end:testEnd,ranges:{
-        s3:{date:testStart,text:"教科書 p.40〜78\nワーク p.20〜35"},
-        s5:{date:addDays(testStart,1),text:"Lesson 3〜4、単語帳 1〜400"},
-        s7:{date:addDays(testStart,2),text:"4章・5章（化学平衡）"},
-        s2:{date:addDays(testStart,3),text:"源氏物語「桐壺」、助動詞"}
+      {id:"x1",name:L("2学期中間テスト","Midterm exam"),start:ts,end:te,ranges:{
+        s3:{date:ts,text:en?"Textbook p.40–78\nWorkbook p.20–35":"教科書 p.40〜78\nワーク p.20〜35"},
+        s5:{date:addDays(ts,1),text:en?"Lessons 3–4, vocab 1–400":"Lesson 3〜4、単語帳 1〜400"},
+        s7:{date:addDays(ts,2),text:en?"Chapters 4–5 (chemical equilibrium)":"4章・5章（化学平衡）"},
+        s2:{date:addDays(ts,3),text:en?"The Tale of Genji, auxiliary verbs":"源氏物語「桐壺」、助動詞"}
       }}
     ],
     days:{}, weeks:{}, timer:null
   };
 }
-function blankData(){ return {name:"",weekStart:1,prepDays:7,startISO:todayISO(),lastBackupISO:"",subjects:[],routines:[],tasks:[],tests:[],days:{},weeks:{},timer:null}; }
+function blankData(){ return {lang,name:"",weekStart:1,prepDays:7,startISO:todayISO(),lastBackupISO:"",subjects:[],routines:[],tasks:[],tests:[],days:{},weeks:{},timer:null}; }
 function normalize(d){
   d=d||{};
   ["subjects","routines","tasks","tests"].forEach(k=>{ if(!Array.isArray(d[k])) d[k]=[]; });
@@ -295,7 +418,7 @@ function normalize(d){
   d.startISO = d.startISO||todayISO();
   d.name=d.name||""; d.lastBackupISO=d.lastBackupISO||"";
   d.routines.forEach(r=>{ if(r.mode!=="due") r.mode="days"; if(!Array.isArray(r.days)) r.days=[]; });
-  d.tests.forEach(t=>{ t.ranges=t.ranges||{}; });
+  d.tests.forEach(x=>{ x.ranges=x.ranges||{}; });
   if (d.timer && (!d.timer.sid || !d.timer.start)) d.timer=null;
   return d;
 }
@@ -303,7 +426,7 @@ function normalize(d){
 /* ---------- state & storage ---------- */
 let data=null, cur=todayISO(), view="today", testId=null, weekCur=todayISO(), selDay=null, openMore=null, confirmKey=null, storageOK=true;
 function load(){ try{ const r=localStorage.getItem(KEY); return r?normalize(JSON.parse(r)):null; }catch(e){ storageOK=false; return null; } }
-function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(data)); storageOK=true; }catch(e){ storageOK=false; toast("保存できませんでした"); } }
+function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(data)); storageOK=true; }catch(e){ storageOK=false; toast(t("saveFail")); } }
 function commit(){ persist(); render(); }
 
 const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
@@ -311,7 +434,7 @@ const isStandalone = window.navigator.standalone===true || (window.matchMedia &&
 const onWeb = /^https?:$/.test(location.protocol);
 
 /* ---------- lookups ---------- */
-function subj(id){ return data.subjects.find(s=>s.id===id) || {id:"",name:"未設定",color:"gray"}; }
+function subj(id){ return data.subjects.find(s=>s.id===id) || {id:"",name:t("unset"),color:"gray"}; }
 function colorOf(c){ const p = PAL.find(x=>x.id===c); if(p) return {b:p.b,d:p.d}; if(/^#[0-9a-f]{6}$/i.test(c||"")) return {b:c,d:`color-mix(in oklab, ${c} 72%, #3d3350)`}; return {b:PAL[11].b,d:PAL[11].d}; }
 function cv(sid){ const c=colorOf(subj(sid).color); return `--cb:${c.b};--cd:${c.d}`; }
 function cvColor(color){ const c=colorOf(color); return `--cb:${c.b};--cd:${c.d}`; }
@@ -322,14 +445,14 @@ function getDay(date){ const d=data.days[date]||{}; return {done:d.done||{}, ski
 function weekRef(ws){ if(!data.weeks[ws]) data.weeks[ws]={}; const w=data.weeks[ws]; w.done=w.done||{}; w.skip=w.skip||[]; return w; }
 
 /* tests */
-function testState(t, ref){
-  if (ref < t.start) return {kind:"before", days:diffDays(ref,t.start)};
-  if (ref <= t.end) return {kind:"now", day:diffDays(t.start,ref)+1};
+function testState(x, ref){
+  if (ref < x.start) return {kind:"before", days:diffDays(ref,x.start)};
+  if (ref <= x.end) return {kind:"now", day:diffDays(x.start,ref)+1};
   return {kind:"past"};
 }
-function upcomingTests(ref){ return data.tests.filter(t=>t.end>=ref).sort((a,b)=>a.start<b.start?-1:1); }
-function inPrep(date){ return data.tests.some(t=>addDays(t.start,-data.prepDays)<=date && date<=t.end); }
-function testById(id){ return data.tests.find(t=>t.id===id); }
+function upcomingTests(ref){ return data.tests.filter(x=>x.end>=ref).sort((a,b)=>a.start<b.start?-1:1); }
+function inPrep(date){ return data.tests.some(x=>addDays(x.start,-data.prepDays)<=date && date<=x.end); }
+function testById(id){ return data.tests.find(x=>x.id===id); }
 
 /* what to do on a date */
 function routinesFor(date){
@@ -348,13 +471,17 @@ function weeklyDue(date){
 function sortByDue(a,b){ return a.due<b.due?-1:a.due>b.due?1:subjOrder(a.subjectId)-subjOrder(b.subjectId); }
 
 function dueChip(dueDate, ref, done){
-  if (done) return `<span class="due">${mdw(dueDate)}まで</span>`;
+  if (done) return `<span class="due">${t("dueBy",{d:mdw(dueDate)})}</span>`;
   const n = diffDays(ref, dueDate);
-  if (n<0) return `<span class="due late">期限切れ ${md(dueDate)}</span>`;
-  if (n===0) return `<span class="due soon">今日まで</span>`;
-  if (n===1) return `<span class="due soon">明日まで</span>`;
-  return `<span class="due">あと${n}日・${md(dueDate)}</span>`;
+  if (n<0) return `<span class="due late">${t("overdue",{d:md(dueDate)})}</span>`;
+  if (n===0) return `<span class="due soon">${t("dueToday")}</span>`;
+  if (n===1) return `<span class="due soon">${t("dueTomorrow")}</span>`;
+  return `<span class="due">${t("daysLeft",{n,d:md(dueDate)})}</span>`;
 }
+const TIL = ()=> lang==="en" ? " – " : "〜";
+const DOT = ()=> lang==="en" ? " · " : " ・ ";
+const JOIN = ()=> lang==="en" ? ", " : "・";
+const GRAD = "background:linear-gradient(90deg,var(--pink),var(--accent))";
 
 /* ---------- render ---------- */
 const main=document.getElementById("main");
@@ -373,54 +500,54 @@ function render(){
 function renderTabs(){
   const el=document.getElementById("tabs");
   if(!data){ el.hidden=true; return; } el.hidden=false;
-  const cur = view==="test"?"plan":view;
-  const b=(id,label,svg)=>`<button data-view="${id}" ${cur===id?'aria-current="page"':""}>${svg}<span>${label}</span></button>`;
+  const cv2 = view==="test"?"plan":view;
+  const b=(id,label,svg)=>`<button data-view="${id}" ${cv2===id?'aria-current="page"':""}>${svg}<span>${label}</span></button>`;
   const s = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
-  el.innerHTML = b("today","今日",s('<circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/>'))
-    + b("plan","予定",s('<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'))
-    + b("record","記録",s('<path d="M5 20V11M12 20V5M19 20v-6"/>'))
-    + b("settings","設定",s('<circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8"/>'));
+  el.innerHTML = b("today",t("today"),s('<circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/>'))
+    + b("plan",t("plan"),s('<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'))
+    + b("record",t("record"),s('<path d="M5 20V11M12 20V5M19 20v-6"/>'))
+    + b("settings",t("settings"),s('<circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8"/>'));
 }
 
 function heroHTML(ref){
-  const t = upcomingTests(ref)[0];
-  if (!t) return `<button class="hero" data-view="plan"><div class="l"><b>次のテストは未登録</b><span>「予定」からテストを追加できます</span></div></button>`;
-  const st = testState(t, ref);
-  if (st.kind==="now") return `<button class="hero now" data-opentest="${t.id}"><div class="l"><b>${esc(t.name)}</b><span>${mdw(t.start)}〜${mdw(t.end)}</span></div><div class="cd"><strong>テスト中</strong><br><small>${st.day}日目</small></div></button>`;
-  return `<button class="hero" data-opentest="${t.id}"><div class="l"><b>${esc(t.name)}</b><span>${mdw(t.start)}から</span></div><div class="cd"><small>あと</small> <strong class="num">${st.days}</strong><em>日</em></div></button>`;
+  const x = upcomingTests(ref)[0];
+  if (!x) return `<button class="hero" data-view="plan"><div class="l"><b>${t("noTest")}</b><span>${t("noTestSub")}</span></div></button>`;
+  const st = testState(x, ref);
+  if (st.kind==="now") return `<button class="hero now" data-opentest="${x.id}"><div class="l"><b>${esc(x.name)}</b><span>${mdw(x.start)}${TIL()}${mdw(x.end)}</span></div><div class="cd"><strong>${t("inTest")}</strong><br><small>${t("dayN",{n:st.day})}</small></div></button>`;
+  return `<button class="hero" data-opentest="${x.id}"><div class="l"><b>${esc(x.name)}</b><span>${t("from",{d:mdw(x.start)})}</span></div><div class="cd"><small>${t("left")}</small> <strong class="num">${st.days}</strong><em>${t("daysUnit")}</em></div></button>`;
 }
 
 function timerHTML(){
   const today = todayISO(), tm = getDay(today).time;
   const total = Object.values(tm).reduce((a,b)=>a+b,0);
   if (data.timer){
-    return `<div class="card timer run"><div class="t"><small>${tag(data.timer.sid)} を勉強中</small><b class="num" id="timerTxt">0:00</b></div>
-      <div class="btns" style="margin:0"><button class="btn primary" data-timerstop>おわり</button><button class="btn" data-timercancel>取り消し</button></div></div>`;
+    return `<div class="card timer run"><div class="t"><small>${tag(data.timer.sid)} ${t("studying")}</small><b class="num" id="timerTxt">0:00</b></div>
+      <div class="btns" style="margin:0"><button class="btn primary" data-timerstop>${t("finish")}</button><button class="btn" data-timercancel>${t("cancel")}</button></div></div>`;
   }
   const chips = Object.keys(tm).filter(k=>tm[k]>0).sort((a,b)=>tm[b]-tm[a]).map(k=>`<span class="mini" style="${cv(k)}">${esc(subj(k).name)} ${fmtMin(tm[k])}</span>`).join("");
-  return `<div class="card timer"><div class="t"><small>今日の勉強時間</small><b class="num">${fmtMin(total)}</b></div>
-    <div class="btns" style="margin:0"><button class="btn primary" data-timerstartsheet>▶ はじめる</button><button class="btn soft" data-addtime>＋ 記録</button></div>
+  return `<div class="card timer"><div class="t"><small>${t("todayTime")}</small><b class="num">${fmtMin(total)}</b></div>
+    <div class="btns" style="margin:0"><button class="btn primary" data-timerstartsheet>${t("start")}</button><button class="btn soft" data-addtime>${t("addRec")}</button></div>
     ${chips?`<div class="tchips">${chips}</div>`:""}</div>`;
 }
 
 function taskRow(item, kind, date){
-  // kind: "r" routine(days) | "w" weekly due | "k" dated task
   const sid=item.subjectId;
   let attrs, chip="", menu="";
   if (kind==="r"){ attrs=`data-toggle="${item.id}" data-date="${date}"`; }
   else if (kind==="w"){ attrs=`data-toggleweek="${item.id}" data-wk="${item.ws}" data-date="${date}"`; chip=dueChip(item.dueDate,date,false); }
   else { attrs=`data-toggletask="${item.id}" data-date="${date}"`; chip=dueChip(item.due,date,false); }
   if (openMore===kind+item.id){
-    menu = `<div class="moremenu">${kind==="r"?`<button class="chipbtn" data-skip="${item.id}">今日は休みにする</button>`
-      : kind==="w"?`<button class="chipbtn" data-skipweek="${item.id}" data-wk="${item.ws}">今週は休みにする</button>`
-      : `<button class="chipbtn" data-edittask="${item.id}">編集</button><button class="chipbtn danger" data-deltask="${item.id}">${confirmKey==="del"+item.id?"本当に削除":"削除"}</button>`}</div>`;
+    menu = `<div class="moremenu">${kind==="r"?`<button class="chipbtn" data-skip="${item.id}">${t("skipToday")}</button>`
+      : kind==="w"?`<button class="chipbtn" data-skipweek="${item.id}" data-wk="${item.ws}">${t("skipWeek")}</button>`
+      : `<button class="chipbtn" data-edittask="${item.id}">${t("edit")}</button><button class="chipbtn danger" data-deltask="${item.id}">${confirmKey==="del"+item.id?t("reallyDel"):t("del")}</button>`}</div>`;
   }
   const testNm = kind==="k" && item.testId && testById(item.testId) ? `<span class="due">${esc(testById(item.testId).name)}</span>` : "";
   return `<div class="task" style="${cv(sid)}">
     <button class="main" ${attrs} aria-pressed="false"><span class="check"></span>
       <span class="txt"><span class="line1">${tag(sid)}${chip}${testNm}</span><span class="name">${esc(item.name)}</span>${item.memo?`<span class="memo">${esc(item.memo)}</span>`:""}</span></button>
-    <button class="more" data-more="${kind+item.id}" aria-label="その他の操作">⋯</button></div>${menu}`;
+    <button class="more" data-more="${kind+item.id}" aria-label="${t("more")}">⋯</button></div>${menu}`;
 }
+function doneBtn(attr, item){ return `<button ${attr} style="${cv(item.subjectId)}"><span class="dot">✓</span><span class="nm">${esc(item.name)}</span><span class="undo">${t("undo")}</span></button>`; }
 
 function todayHTML(){
   const date=cur, today=todayISO(), isToday=date===today;
@@ -436,103 +563,101 @@ function todayHTML(){
 
   let h = `<header class="top">
     <div class="dayline">
-      <button class="navbtn" data-day="-1" aria-label="前の日">‹</button>
-      <div class="date"><div class="eyebrow">${isToday?"TODAY":"DAY"}${data.name?` ・ ${esc(data.name)}`:""}</div><h1>${dateTitle(date)}</h1>
-        <div class="sub">${inPrep(date)?`<span class="due soon">テスト期間</span>`:""}${isToday?"":`<button class="pill" data-gotoday>今日へ</button>`}</div></div>
-      <button class="navbtn" data-day="1" aria-label="次の日">›</button>
+      <button class="navbtn" data-day="-1" aria-label="${t("prevDay")}">‹</button>
+      <div class="date"><div class="eyebrow">${isToday?t("eyeToday"):t("eyeDay")}${data.name?`${DOT()}${esc(data.name)}`:""}</div><h1>${dateTitle(date)}</h1>
+        <div class="sub">${inPrep(date)?`<span class="due soon">${t("testPeriod")}</span>`:""}${isToday?"":`<button class="pill" data-gotoday>${t("goToday")}</button>`}</div></div>
+      <button class="navbtn" data-day="1" aria-label="${t("nextDay")}">›</button>
     </div>
     ${heroHTML(date)}
     ${isToday?timerHTML():""}
-    <div class="card prog"><div class="row"><div class="big num">${n}<small>/ ${total} 完了</small></div><div class="rest num">${total?pct+"%":""}</div></div>
-      <div class="bar"><span style="width:${pct}%;background:linear-gradient(90deg,var(--pink),var(--accent))"></span></div></div>
+    <div class="card prog"><div class="row"><div class="big num">${n}<small>${t("doneOf",{n:total})}</small></div><div class="rest num">${total?pct+"%":""}</div></div>
+      <div class="bar"><span style="width:${pct}%;${GRAD}"></span></div></div>
     ${banners()}
   </header>`;
 
-  h += `<h2 class="sec">${isToday?"今日すること":"この日すること"}<span class="cnt num">${R.todo.length+W.pending.length+pendTasks.length}件</span></h2>`;
-  if (!R.todo.length && !W.pending.length && !pendTasks.length) h += `<div class="empty">${total?"ぜんぶ完了！おつかれさま":"予定はありません"}</div>`;
-  if (R.todo.length){ h += `<div class="gsub">毎日の課題</div><div class="list">${R.todo.map(r=>taskRow(r,"r",date)).join("")}</div>`; }
-  if (W.pending.length){ h += `<div class="gsub">今週中にすること</div><div class="list">${W.pending.slice().sort((a,b)=>a.dueDate<b.dueDate?-1:1).map(r=>taskRow(r,"w",date)).join("")}</div>`; }
-  if (pendTasks.length){ h += `<div class="gsub">${isToday?"期限が近いもの（1週間以内）":"この日が期限のもの"}</div><div class="list">${pendTasks.map(k=>taskRow(k,"k",date)).join("")}</div>`; }
-  if (laterCount) h += `<button class="addbtn" data-view="plan" style="border-style:solid">ほかに ${laterCount}件の課題があります ›</button>`;
-  h += `<button class="addbtn" data-newtask>＋ 課題を追加</button>`;
+  h += `<h2 class="sec">${isToday?t("todoToday"):t("todoDay")}<span class="cnt num">${t("items",{n:R.todo.length+W.pending.length+pendTasks.length})}</span></h2>`;
+  if (!R.todo.length && !W.pending.length && !pendTasks.length) h += `<div class="empty">${total?t("allDone"):t("noPlans")}</div>`;
+  if (R.todo.length) h += `<div class="gsub">${t("gDaily")}</div><div class="list">${R.todo.map(r=>taskRow(r,"r",date)).join("")}</div>`;
+  if (W.pending.length) h += `<div class="gsub">${t("gWeekly")}</div><div class="list">${W.pending.slice().sort((a,b)=>a.dueDate<b.dueDate?-1:1).map(r=>taskRow(r,"w",date)).join("")}</div>`;
+  if (pendTasks.length) h += `<div class="gsub">${isToday?t("gSoon"):t("gThisDay")}</div><div class="list">${pendTasks.map(k=>taskRow(k,"k",date)).join("")}</div>`;
+  if (laterCount) h += `<button class="addbtn" data-view="plan" style="border-style:solid">${t("moreTasks",{n:laterCount})}</button>`;
+  h += `<button class="addbtn" data-newtask>${t("addTask")}</button>`;
 
-  h += `<h2 class="sec">完了したもの<span class="cnt num">${n}件</span></h2>`;
-  if (!n) h += `<div class="empty">まだありません</div>`;
+  h += `<h2 class="sec">${t("doneList")}<span class="cnt num">${t("items",{n})}</span></h2>`;
+  if (!n) h += `<div class="empty">${t("none")}</div>`;
   else h += `<div class="donelist">${
-    R.done.map(r=>`<button data-toggle="${r.id}" data-date="${date}" style="${cv(r.subjectId)}"><span class="dot">✓</span><span class="nm">${esc(r.name)}</span><span class="undo">戻す</span></button>`).join("")
-    + doneWeek.map(r=>`<button data-toggleweek="${r.id}" data-wk="${r.ws}" data-date="${date}" style="${cv(r.subjectId)}"><span class="dot">✓</span><span class="nm">${esc(r.name)}</span><span class="undo">戻す</span></button>`).join("")
-    + doneTasks.map(k=>`<button data-toggletask="${k.id}" data-date="${date}" style="${cv(k.subjectId)}"><span class="dot">✓</span><span class="nm">${esc(k.name)}</span><span class="undo">戻す</span></button>`).join("")}</div>`;
-  if (R.skipped.length || W.skipped.length) h += `<h2 class="sec">休みにしたもの</h2><div class="pickrow">${R.skipped.map(r=>`<button class="chipbtn" data-unskip="${r.id}">${esc(r.name)} ↺</button>`).join("")}${W.skipped.map(r=>`<button class="chipbtn" data-unskipweek="${r.id}" data-wk="${r.ws}">${esc(r.name)}（今週）↺</button>`).join("")}</div>`;
+    R.done.map(r=>doneBtn(`data-toggle="${r.id}" data-date="${date}"`,r)).join("")
+    + doneWeek.map(r=>doneBtn(`data-toggleweek="${r.id}" data-wk="${r.ws}" data-date="${date}"`,r)).join("")
+    + doneTasks.map(k=>doneBtn(`data-toggletask="${k.id}" data-date="${date}"`,k)).join("")}</div>`;
+  if (R.skipped.length || W.skipped.length) h += `<h2 class="sec">${t("skipped")}</h2><div class="pickrow">${R.skipped.map(r=>`<button class="chipbtn" data-unskip="${r.id}">${esc(r.name)} ↺</button>`).join("")}${W.skipped.map(r=>`<button class="chipbtn" data-unskipweek="${r.id}" data-wk="${r.ws}">${esc(r.name)}${t("thisWeekTag")} ↺</button>`).join("")}</div>`;
   return h;
 }
 
-function testCard(t, ref){
-  const st=testState(t,ref);
-  const tasks=data.tasks.filter(k=>k.testId===t.id), done=tasks.filter(k=>k.doneDate).length;
+function testCard(x, ref){
+  const st=testState(x,ref);
+  const tasks=data.tasks.filter(k=>k.testId===x.id), done=tasks.filter(k=>k.doneDate).length;
   const pct = tasks.length?Math.round(done/tasks.length*100):0;
-  const badge = st.kind==="before"?`<span class="days num">あと${st.days}日</span>`:st.kind==="now"?`<span class="days now">テスト中</span>`:`<span class="days">終了</span>`;
-  return `<button class="tcard${st.kind==="past"?" past":""}" data-opentest="${t.id}"><div class="h"><b>${esc(t.name)}</b>${badge}</div>
-    <div class="meta">${mdw(t.start)}〜${mdw(t.end)} ・ 勉強計画 ${done}/${tasks.length}</div>
-    <div class="bar"><span style="width:${pct}%;background:linear-gradient(90deg,var(--pink),var(--accent))"></span></div></button>`;
+  const badge = st.kind==="before"?`<span class="days num">${t("badgeLeft",{n:st.days})}</span>`:st.kind==="now"?`<span class="days now">${t("badgeNow")}</span>`:`<span class="days">${t("badgeEnd")}</span>`;
+  return `<button class="tcard${st.kind==="past"?" past":""}" data-opentest="${x.id}"><div class="h"><b>${esc(x.name)}</b>${badge}</div>
+    <div class="meta">${mdw(x.start)}${TIL()}${mdw(x.end)}${DOT()}${t("planProg",{a:done,b:tasks.length})}</div>
+    <div class="bar"><span style="width:${pct}%;${GRAD}"></span></div></button>`;
 }
 
 function planHTML(){
   const today=todayISO();
-  const up = upcomingTests(today), past = data.tests.filter(t=>t.end<today).sort((a,b)=>a.start>b.start?-1:1);
-  let h = `<header class="top"><div class="date"><div class="eyebrow">PLAN</div><h1>予定</h1><div class="sub">テストと提出物</div></div></header>`;
-  h += `<h2 class="sec">テスト</h2><div class="list">${up.map(t=>testCard(t,today)).join("")||`<div class="empty">予定しているテストはありません</div>`}</div>
-    <button class="addbtn" data-newtest>＋ テストを追加</button>`;
+  const up = upcomingTests(today), past = data.tests.filter(x=>x.end<today).sort((a,b)=>a.start>b.start?-1:1);
+  let h = `<header class="top"><div class="date"><div class="eyebrow">${t("eyePlan")}</div><h1>${t("planTitle")}</h1><div class="sub">${t("planSub")}</div></div></header>`;
+  h += `<h2 class="sec">${t("tests")}</h2><div class="list">${up.map(x=>testCard(x,today)).join("")||`<div class="empty">${t("noTests")}</div>`}</div>
+    <button class="addbtn" data-newtest>${t("addTest")}</button>`;
   const pend = data.tasks.filter(k=>!k.doneDate && !k.testId).sort(sortByDue);
-  h += `<h2 class="sec">提出物・課題<span class="cnt num">${pend.length}件</span></h2>`;
-  if (!pend.length) h += `<div class="empty">期限つきの課題はありません</div>`;
+  h += `<h2 class="sec">${t("assignments")}<span class="cnt num">${t("items",{n:pend.length})}</span></h2>`;
+  if (!pend.length) h += `<div class="empty">${t("noAssign")}</div>`;
   else h += `<div class="list">${pend.map(k=>taskRow(k,"k",today)).join("")}</div>`;
-  h += `<button class="addbtn" data-newtask>＋ 課題を追加</button>`;
+  h += `<button class="addbtn" data-newtask>${t("addTask")}</button>`;
   const doneK = data.tasks.filter(k=>k.doneDate && !k.testId).sort((a,b)=>a.doneDate>b.doneDate?-1:1).slice(0,10);
-  if (doneK.length) h += `<h2 class="sec">最近完了した課題</h2><div class="donelist">${doneK.map(k=>`<button data-toggletask="${k.id}" style="${cv(k.subjectId)}"><span class="dot">✓</span><span class="nm">${esc(k.name)}</span><span class="undo">${md(k.doneDate)} ・ 戻す</span></button>`).join("")}</div>`;
-  if (past.length) h += `<h2 class="sec">終わったテスト</h2><div class="list">${past.slice(0,6).map(t=>testCard(t,today)).join("")}</div>`;
+  if (doneK.length) h += `<h2 class="sec">${t("recentDone")}</h2><div class="donelist">${doneK.map(k=>`<button data-toggletask="${k.id}" style="${cv(k.subjectId)}"><span class="dot">✓</span><span class="nm">${esc(k.name)}</span><span class="undo">${md(k.doneDate)}${DOT()}${t("undo")}</span></button>`).join("")}</div>`;
+  if (past.length) h += `<h2 class="sec">${t("pastTests")}</h2><div class="list">${past.slice(0,6).map(x=>testCard(x,today)).join("")}</div>`;
   return h;
 }
 
 function testHTML(){
-  const t=testById(testId); if(!t){ view="plan"; return planHTML(); }
-  const today=todayISO(), st=testState(t,today);
-  const tasks=data.tasks.filter(k=>k.testId===t.id);
+  const x=testById(testId); if(!x){ view="plan"; return planHTML(); }
+  const today=todayISO(), st=testState(x,today);
+  const tasks=data.tasks.filter(k=>k.testId===x.id);
   const done=tasks.filter(k=>k.doneDate).length, pct=tasks.length?Math.round(done/tasks.length*100):0;
-  let h = `<header class="top"><div class="dayline"><button class="navbtn" data-view="plan" aria-label="予定に戻る">‹</button>
-     <div class="date"><div class="eyebrow">TEST</div><h1>${esc(t.name)}</h1><div class="sub">${mdw(t.start)}〜${mdw(t.end)}</div></div>
-     <button class="navbtn" data-edittest="${t.id}" aria-label="テストを編集" style="font-size:14px">編集</button></div>
-    <div class="hero${st.kind==="now"?" now":""}" style="cursor:default"><div class="l"><b>${st.kind==="before"?"テストまで":st.kind==="now"?"テスト期間中":"テストは終わりました"}</b><span>勉強計画 ${done}/${tasks.length} 完了</span></div>
-      <div class="cd">${st.kind==="before"?`<small>あと</small> <strong class="num">${st.days}</strong><em>日</em>`:st.kind==="now"?`<strong>${st.day}日目</strong>`:`<strong style="font-size:24px">おつかれさま</strong>`}</div></div>
-    <div class="bar"><span style="width:${pct}%;background:linear-gradient(90deg,var(--pink),var(--accent))"></span></div>
+  let h = `<header class="top"><div class="dayline"><button class="navbtn" data-view="plan" aria-label="${t("backPlan")}">‹</button>
+     <div class="date"><div class="eyebrow">${t("eyeTest")}</div><h1>${esc(x.name)}</h1><div class="sub">${mdw(x.start)}${TIL()}${mdw(x.end)}</div></div>
+     <button class="navbtn" data-edittest="${x.id}" aria-label="${t("editTest")}" style="font-size:13px;width:auto;padding:0 12px;border-radius:999px">${t("edit")}</button></div>
+    <div class="hero${st.kind==="now"?" now":""}" style="cursor:default"><div class="l"><b>${st.kind==="before"?t("untilTest"):st.kind==="now"?t("during"):t("over")}</b><span>${t("planDone",{a:done,b:tasks.length})}</span></div>
+      <div class="cd">${st.kind==="before"?`<small>${t("left")}</small> <strong class="num">${st.days}</strong><em>${t("daysUnit")}</em>`:st.kind==="now"?`<strong>${t("dayN",{n:st.day})}</strong>`:`<strong style="font-size:22px">${t("goodJob")}</strong>`}</div></div>
+    <div class="bar"><span style="width:${pct}%;${GRAD}"></span></div>
   </header>`;
-  const sids = data.subjects.map(s=>s.id).filter(id=>t.ranges[id] && (t.ranges[id].text||t.ranges[id].date) || tasks.some(k=>k.subjectId===id))
-    .sort((a,b)=>{ const da=(t.ranges[a]||{}).date||"9999", db=(t.ranges[b]||{}).date||"9999"; return da<db?-1:da>db?1:subjOrder(a)-subjOrder(b); });
-  h += `<h2 class="sec">教科ごとの範囲と勉強計画</h2>`;
-  if (!sids.length) h += `<div class="empty">「編集」から教科ごとの試験日と範囲を入れてください</div>`;
+  const sids = data.subjects.map(s=>s.id).filter(id=>x.ranges[id] && (x.ranges[id].text||x.ranges[id].date) || tasks.some(k=>k.subjectId===id))
+    .sort((a,b)=>{ const da=(x.ranges[a]||{}).date||"9999", db=(x.ranges[b]||{}).date||"9999"; return da<db?-1:da>db?1:subjOrder(a)-subjOrder(b); });
+  h += `<h2 class="sec">${t("rangesPlans")}</h2>`;
+  if (!sids.length) h += `<div class="empty">${t("noRanges")}</div>`;
   sids.forEach(id=>{
-    const r=t.ranges[id]||{}, list=tasks.filter(k=>k.subjectId===id).sort(sortByDue);
-    h += `<div class="sblock" style="${cv(id)}"><div class="sh">${tag(id)}${r.date?`<span class="d">試験日 ${mdw(r.date)}</span>`:""}</div>
+    const r=x.ranges[id]||{}, list=tasks.filter(k=>k.subjectId===id).sort(sortByDue);
+    h += `<div class="sblock" style="${cv(id)}"><div class="sh">${tag(id)}${r.date?`<span class="d">${t("examDay",{d:mdw(r.date)})}</span>`:""}</div>
       ${r.text?`<div class="range">${esc(r.text)}</div>`:""}
-      ${list.map(k=>`<div class="plan${k.doneDate?" done":""}"><button class="mc${k.doneDate?" on":""}" data-toggletask="${k.id}" data-date="${today}" aria-pressed="${!!k.doneDate}" aria-label="${esc(k.name)}">${k.doneDate?"✓":""}</button><span class="nm">${esc(k.name)}</span>${dueChip(k.due,today,!!k.doneDate)}<button class="linkbtn" data-edittask="${k.id}" aria-label="編集">⋯</button></div>`).join("")}
-      <button class="linkbtn" data-newplan="${id}">＋ 勉強計画を追加</button></div>`;
+      ${list.map(k=>`<div class="plan${k.doneDate?" done":""}"><button class="mc${k.doneDate?" on":""}" data-toggletask="${k.id}" data-date="${today}" aria-pressed="${!!k.doneDate}" aria-label="${esc(t("markDone",{s:k.name}))}">${k.doneDate?"✓":""}</button><span class="nm">${esc(k.name)}</span>${dueChip(k.due,today,!!k.doneDate)}<button class="linkbtn" data-edittask="${k.id}" aria-label="${t("edit")}">⋯</button></div>`).join("")}
+      <button class="linkbtn" data-newplan="${id}">${t("addPlan")}</button></div>`;
   });
-  h += `<button class="addbtn" data-newplan="">＋ 勉強計画を追加（教科を選ぶ）</button>`;
+  h += `<button class="addbtn" data-newplan="">${t("addPlanPick")}</button>`;
   return h;
 }
 
 function recordHTML(){
   const today=todayISO(), ws=weekStartOf(weekCur,data.weekStart), we=addDays(ws,6);
   const dates=[]; for(let i=0;i<7;i++) dates.push(addDays(ws,i));
-  const perDay = dates.map(d=>{ const t=getDay(d).time; return {d, total:Object.values(t).reduce((a,b)=>a+b,0), t}; });
+  const perDay = dates.map(d=>{ const tt=getDay(d).time; return {d, total:Object.values(tt).reduce((a,b)=>a+b,0), t:tt}; });
   const weekTotal = perDay.reduce((a,p)=>a+p.total,0);
   const bySubj = {}; perDay.forEach(p=>Object.keys(p.t).forEach(k=>{ bySubj[k]=(bySubj[k]||0)+p.t[k]; }));
   const subjRows = Object.keys(bySubj).filter(k=>bySubj[k]>0).sort((a,b)=>bySubj[b]-bySubj[a]);
   const maxS = Math.max(1,...subjRows.map(k=>bySubj[k]));
-  // completion
   let rDone=0,rAll=0; dates.forEach(d=>{ if(d>today || d<data.startISO) return; const R=routinesFor(d); rAll+=R.active.length; rDone+=R.done.length; });
   const kDone = data.tasks.filter(k=>k.doneDate && k.doneDate>=ws && k.doneDate<=we).length;
 
-  // chart geometry
   const W=340,H=170,padL=8,padR=8,top=22,bottom=26, cw=(W-padL-padR)/7, bw=Math.min(26,cw*.5);
   const maxM = Math.max(60, ...perDay.map(p=>p.total));
   const stepH = maxM<=120?30:maxM<=300?60:120, yMax=Math.ceil(maxM/stepH)*stepH;
@@ -540,69 +665,78 @@ function recordHTML(){
   let grid=""; for(let m=stepH;m<=yMax;m+=stepH){ grid+=`<line class="grid" x1="${padL}" x2="${W-padR}" y1="${y(m)}" y2="${y(m)}"/>`; }
   let bars="";
   perDay.forEach((p,i)=>{
-    const cx=padL+cw*i+cw/2, yy=y(p.total), hh=H-bottom-yy;
-    if (p.total>0) bars+=`<path class="barr${selDay===p.d?" sel":""}" d="M${cx-bw/2},${H-bottom} V${yy+4} Q${cx-bw/2},${yy} ${cx-bw/2+4},${yy} H${cx+bw/2-4} Q${cx+bw/2},${yy} ${cx+bw/2},${yy+4} V${H-bottom} Z"><title>${mdw(p.d)} ${fmtMin(p.total)}</title></path>`;
-    if (p.total>0) bars+=`<text class="val" x="${cx}" y="${yy-6}" text-anchor="middle">${p.total>=60?(Math.round(p.total/6)/10)+"h":p.total+"m"}</text>`;
-    bars+=`<text x="${cx}" y="${H-8}" text-anchor="middle" ${p.d===today?'style="fill:var(--accent);font-weight:700"':""}>${DOW[dow(p.d)]}</text>`;
+    const cx=padL+cw*i+cw/2, yy=y(p.total);
+    if (p.total>0){
+      bars+=`<path class="barr${selDay===p.d?" sel":""}" d="M${cx-bw/2},${H-bottom} V${yy+4} Q${cx-bw/2},${yy} ${cx-bw/2+4},${yy} H${cx+bw/2-4} Q${cx+bw/2},${yy} ${cx+bw/2},${yy+4} V${H-bottom} Z"></path>`;
+      bars+=`<text class="val" x="${cx}" y="${yy-6}" text-anchor="middle">${p.total>=60?(Math.round(p.total/6)/10)+"h":p.total+"m"}</text>`;
+    }
+    bars+=`<text x="${cx}" y="${H-8}" text-anchor="middle" ${p.d===today?'style="fill:var(--accent);font-weight:700"':""}>${DOWN()[dow(p.d)]}</text>`;
     bars+=`<rect class="hit" data-selday="${p.d}" x="${padL+cw*i}" y="${top}" width="${cw}" height="${H-top}"><title>${mdw(p.d)} ${fmtMin(p.total)}</title></rect>`;
   });
   const sel = perDay.find(p=>p.d===selDay);
   let h = `<header class="top"><div class="dayline">
-      <button class="navbtn" data-rweek="-1" aria-label="前の週">‹</button>
-      <div class="date"><div class="eyebrow">RECORD</div><h1 class="num">${md(ws)} 〜 ${md(we)}</h1>
-        <div class="sub">${(today>=ws&&today<=we)?"今週":`<button class="pill" data-rweek="0">今週へ</button>`}</div></div>
-      <button class="navbtn" data-rweek="1" aria-label="次の週">›</button></div></header>
-    <div class="card"><div class="eyebrow">1週間の勉強時間</div><div style="font-size:30px;font-weight:800" class="num">${fmtMin(weekTotal)}</div>
-      <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="曜日ごとの勉強時間">${grid}<line class="grid" x1="${padL}" x2="${W-padR}" y1="${H-bottom}" y2="${H-bottom}"/>${bars}</svg>
-      <div class="daydetail">${sel ? `<b>${mdw(sel.d)}</b> ${fmtMin(sel.total)}<div class="minis" style="margin-top:6px">${Object.keys(sel.t).filter(k=>sel.t[k]>0).map(k=>`<span class="mini" style="${cv(k)}">${esc(subj(k).name)} ${fmtMin(sel.t[k])}</span>`).join("")||`<span style="color:var(--ink2)">記録なし</span>`}</div>` : `<span style="color:var(--ink2)">棒をタップすると、その日の教科ごとの時間が見られます</span>`}</div>
+      <button class="navbtn" data-rweek="-1" aria-label="${t("prevWeek")}">‹</button>
+      <div class="date"><div class="eyebrow">${t("eyeRec")}</div><h1 class="num">${md(ws)}${TIL()}${md(we)}</h1>
+        <div class="sub">${(today>=ws&&today<=we)?t("thisWeek"):`<button class="pill" data-rweek="0">${t("goThisWeek")}</button>`}</div></div>
+      <button class="navbtn" data-rweek="1" aria-label="${t("nextWeek")}">›</button></div></header>
+    <div class="card"><div class="eyebrow">${t("weekTime")}</div><div style="font-size:30px;font-weight:800" class="num">${fmtMin(weekTotal)}</div>
+      <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${t("chartLabel")}">${grid}<line class="grid" x1="${padL}" x2="${W-padR}" y1="${H-bottom}" y2="${H-bottom}"/>${bars}</svg>
+      <div class="daydetail">${sel ? `<b>${mdw(sel.d)}</b> ${fmtMin(sel.total)}<div class="minis" style="margin-top:6px">${Object.keys(sel.t).filter(k=>sel.t[k]>0).map(k=>`<span class="mini" style="${cv(k)}">${esc(subj(k).name)} ${fmtMin(sel.t[k])}</span>`).join("")||`<span style="color:var(--ink2)">${t("noRec")}</span>`}</div>` : `<span style="color:var(--ink2)">${t("tapBar")}</span>`}</div>
     </div>`;
-  h += `<h2 class="sec">教科ごとの時間</h2><div class="card">${subjRows.length?subjRows.map(k=>`<div class="hbar" style="${cv(k)}"><span>${tag(k)}</span><span class="track"><span class="fill" style="display:block;width:${bySubj[k]/maxS*100}%"></span></span><span class="v">${fmtMin(bySubj[k])}</span></div>`).join(""):`<div style="color:var(--ink2);font-size:14px">この週の記録はまだありません。今日の画面の「はじめる」で時間を記録できます。</div>`}</div>`;
-  h += `<h2 class="sec">課題の達成</h2><div class="card"><div class="hbar" style="--cd:var(--accent)"><span>毎日の課題</span><span class="track"><span class="fill" style="display:block;width:${rAll?rDone/rAll*100:0}%"></span></span><span class="v">${rDone}/${rAll}</span></div>
-     <div style="font-size:14px;margin-top:6px">期限つきの課題を <b class="num">${kDone}</b> 件完了</div></div>`;
+  h += `<h2 class="sec">${t("bySubj")}</h2><div class="card">${subjRows.length?subjRows.map(k=>`<div class="hbar" style="${cv(k)}"><span>${tag(k)}</span><span class="track"><span class="fill" style="display:block;width:${bySubj[k]/maxS*100}%"></span></span><span class="v">${fmtMin(bySubj[k])}</span></div>`).join(""):`<div style="color:var(--ink2);font-size:14px">${t("noWeekRec")}</div>`}</div>`;
+  h += `<h2 class="sec">${t("achieve")}</h2><div class="card"><div class="hbar" style="--cd:var(--accent)"><span>${t("dailyTasks")}</span><span class="track"><span class="fill" style="display:block;width:${rAll?rDone/rAll*100:0}%"></span></span><span class="v">${rDone}/${rAll}</span></div>
+     <div style="font-size:14px;margin-top:6px">${t("datedDone",{n:kDone})}</div></div>`;
   return h;
 }
 
+function langPicker(){
+  return `<div class="pickrow" role="group" aria-label="Language"><button class="pick" data-lang="ja" aria-pressed="${lang==="ja"}">日本語</button><button class="pick" data-lang="en" aria-pressed="${lang==="en"}">English</button></div>`;
+}
+
 function settingsHTML(){
-  let h = `<header class="top"><div class="date"><div class="eyebrow">SETTINGS</div><h1>設定</h1></div>
-    <a class="linkrow" href="guide.html">使い方を見る<span aria-hidden="true" style="color:var(--ink2)">›</span></a></header>`;
-  h += `<h2 class="sec">教科と色</h2><div class="list">${data.subjects.map((s,i)=>`<button class="srow" data-editsubj="${s.id}" style="${cvColor(s.color)}"><span class="sw"></span><span class="txt"><span class="name">${esc(s.name)}</span></span><span aria-hidden="true" style="color:var(--ink2)">›</span></button>`).join("")||`<div class="empty">教科を追加してください</div>`}</div>
-    <button class="addbtn" data-newsubj>＋ 教科を追加</button>`;
-  h += `<h2 class="sec">毎週の課題</h2><p class="hint">曜日が決まっている課題（英単語、課題プリントなど）や、「○曜日までに」出す課題を登録します。</p><div class="list">`;
+  let h = `<header class="top"><div class="date"><div class="eyebrow">${t("eyeSet")}</div><h1>${t("settings")}</h1></div>
+    <a class="linkrow" href="${t("guideFile")}">${t("guide")}<span aria-hidden="true" style="color:var(--ink2)">›</span></a></header>`;
+  h += `<h2 class="sec">${t("subjColors")}</h2><div class="list">${data.subjects.map(s=>`<button class="srow" data-editsubj="${s.id}" style="${cvColor(s.color)}"><span class="sw"></span><span class="txt"><span class="name">${esc(s.name)}</span></span><span aria-hidden="true" style="color:var(--ink2)">›</span></button>`).join("")||`<div class="empty">${t("addSubjFirst")}</div>`}</div>
+    <button class="addbtn" data-newsubj>${t("addSubj")}</button>`;
+  h += `<h2 class="sec">${t("weekly")}</h2><p class="hint">${t("weeklyHint")}</p><div class="list">`;
   const rs = data.routines.slice().sort((a,b)=>subjOrder(a.subjectId)-subjOrder(b.subjectId));
-  h += rs.map(r=>`<button class="srow" data-editroutine="${r.id}" style="${cv(r.subjectId)}"><span class="sw"></span><span class="txt"><span class="name">${esc(r.name)}</span><span class="memo">${esc(subj(r.subjectId).name)} ・ ${r.mode==="due"?`毎週${DOW[r.due]}曜まで`:(r.days.length===7?"毎日":[1,2,3,4,5,6,0].filter(i=>r.days.includes(i)).map(i=>DOW[i]).join("・"))}${r.pauseInTest?" ・ テスト期間は休み":""}</span></span><span aria-hidden="true" style="color:var(--ink2)">›</span></button>`).join("") || `<div class="empty">まだありません</div>`;
-  h += `</div><button class="addbtn" data-newroutine>＋ 毎週の課題を追加</button>`;
-  h += `<h2 class="sec">その他</h2>
+  h += rs.map(r=>`<button class="srow" data-editroutine="${r.id}" style="${cv(r.subjectId)}"><span class="sw"></span><span class="txt"><span class="name">${esc(r.name)}</span><span class="memo">${esc(subj(r.subjectId).name)}${DOT()}${r.mode==="due"?t("everyWeekBy",{d:DOWN()[r.due]}):(r.days.length===7?t("everyday"):[1,2,3,4,5,6,0].filter(i=>r.days.includes(i)).map(i=>DOWN()[i]).join(JOIN()))}${r.pauseInTest?t("pausedTest"):""}</span></span><span aria-hidden="true" style="color:var(--ink2)">›</span></button>`).join("") || `<div class="empty">${t("none")}</div>`;
+  h += `</div><button class="addbtn" data-newroutine>${t("addWeekly")}</button>`;
+  h += `<h2 class="sec">${t("other")}</h2>
     <div class="card">
-    <div class="field"><label for="f-name">名前（画面の上に表示）</label><input type="text" id="f-name" value="${esc(data.name)}" maxlength="20" placeholder="なくてもOK"></div>
-    <div class="field"><label for="f-prep">テスト期間（「テスト期間は休み」にした課題が休みになる期間）</label><select id="f-prep">${[3,5,7,10,14].map(n=>`<option value="${n}" ${data.prepDays===n?"selected":""}>テストの${n}日前から</option>`).join("")}</select></div>
-    <div class="field" style="margin:0"><span class="lb">週の始まり</span><div class="pickrow"><button class="pick" data-wstart="1" aria-pressed="${data.weekStart===1}">月曜日</button><button class="pick" data-wstart="0" aria-pressed="${data.weekStart===0}">日曜日</button></div></div>
+    <div class="field"><span class="lb">${t("language")}</span>${langPicker()}</div>
+    <div class="field"><label for="f-name">${t("nameLabel")}</label><input type="text" id="f-name" value="${esc(data.name)}" maxlength="20" placeholder="${t("optional")}"></div>
+    <div class="field"><label for="f-prep">${t("prepLabel")}</label><select id="f-prep">${[3,5,7,10,14].map(n=>`<option value="${n}" ${data.prepDays===n?"selected":""}>${t("prepOpt",{n})}</option>`).join("")}</select></div>
+    <div class="field" style="margin:0"><span class="lb">${t("weekStart")}</span><div class="pickrow"><button class="pick" data-wstart="1" aria-pressed="${data.weekStart===1}">${t("mon")}</button><button class="pick" data-wstart="0" aria-pressed="${data.weekStart===0}">${t("sun")}</button></div></div>
     </div>`;
-  h += `<h2 class="sec">バックアップ</h2><div class="card">
-    <p style="margin:0 0 6px;font-size:14px">記録はこのiPhoneの中だけに保存されています。ときどきバックアップを保存しておくと安心です。機種変更のときもこのファイルを使います。</p>
-    <p class="note">前回のバックアップ：${data.lastBackupISO?`${dateTitle(data.lastBackupISO)}（${diffDays(data.lastBackupISO,todayISO())}日前）`:"まだありません"}</p>
-    <div class="btns"><button class="btn primary grow" data-export>バックアップを保存</button><button class="btn grow" data-import>復元する</button></div>
-    <div class="btns"><button class="btn danger sm" data-reset>${confirmKey==="reset"?"本当にすべて消す":"すべてのデータを消す"}</button></div></div>
-    ${storageOK?"":`<p class="note" style="color:var(--warn)">このブラウザでは保存ができない設定になっています。</p>`}`;
+  h += `<h2 class="sec">${t("backup")}</h2><div class="card">
+    <p style="margin:0 0 6px;font-size:14px">${t("backupText")}</p>
+    <p class="note">${t("lastBackup")}${data.lastBackupISO?t("lastBackupVal",{d:dateTitle(data.lastBackupISO),n:diffDays(data.lastBackupISO,todayISO())}):t("never")}</p>
+    <div class="btns"><button class="btn primary grow" data-export>${t("saveBackup")}</button><button class="btn grow" data-import>${t("restore")}</button></div>
+    <div class="btns"><button class="btn danger sm" data-reset>${confirmKey==="reset"?t("resetSure"):t("resetAll")}</button></div></div>
+    ${storageOK?"":`<p class="note" style="color:var(--warn)">${t("storageNg")}</p>`}`;
   return h;
 }
 
 function banners(){
   let h="";
-  if (isIOS && onWeb && !isStandalone) h += `<div class="banner"><div><b>ホーム画面に追加してから使ってね</b><br>Safariのままだと記録が別々になります。共有ボタン →「ホーム画面に追加」</div></div>`;
+  if (isIOS && onWeb && !isStandalone) h += `<div class="banner"><div>${t("bnHome")}</div></div>`;
   const n = data.lastBackupISO ? diffDays(data.lastBackupISO,todayISO()) : null;
   const used = Object.keys(data.days).length;
-  if ((n===null && used>=7) || n>=14) h += `<div class="banner"><div style="flex:1"><b>バックアップしよう</b><br>${n===null?"まだ一度も保存していません":`前回から${n}日たっています`}</div><button class="btn primary sm" data-export>保存</button></div>`;
+  if ((n===null && used>=7) || n>=14) h += `<div class="banner"><div style="flex:1">${t("bnBackup",{t:n===null?t("bnNever"):t("bnDays",{n})})}</div><button class="btn primary sm" data-export>${t("save")}</button></div>`;
   return h;
 }
 
 function setupHTML(){
-  return `<div class="setup"><div class="eyebrow">WELCOME</div><h1>Study Planner</h1>
-    <p>毎日の課題、提出物の期限、テストまでの勉強計画と勉強時間を、ひとつにまとめて管理できます。</p>
-    <div class="btns"><button class="btn primary grow" data-seed="sample">例を入れてはじめる</button><button class="btn grow" data-seed="blank">空の状態ではじめる</button></div>
-    <div class="btns"><button class="btn soft grow" data-import>バックアップから復元</button></div>
-    <p class="note">例には「（例）」と付いています。教科や課題はあとで自由に変えられます。</p>
-    <p class="note"><a href="guide.html" style="color:var(--accent);font-weight:700">使い方を見る ›</a></p>
-    ${isIOS && onWeb && !isStandalone ? `<div class="banner"><div><b>先にホーム画面に追加してね</b><br>共有ボタン →「ホーム画面に追加」。追加したアイコンから開いてはじめます。</div></div>`:""}</div>`;
+  return `<div class="setup">
+    <div class="field" style="margin-bottom:20px"><span class="lb" style="font-size:13px;color:var(--ink2)">Language / 言語</span>${langPicker()}</div>
+    <div class="eyebrow">${t("welcome")}</div><h1>Study Planner</h1>
+    <p>${t("setupText")}</p>
+    <div class="btns"><button class="btn primary grow" data-seed="sample">${t("startSample")}</button><button class="btn grow" data-seed="blank">${t("startBlank")}</button></div>
+    <div class="btns"><button class="btn soft grow" data-import>${t("restoreBackup")}</button></div>
+    <p class="note">${t("sampleNote")}</p>
+    <p class="note"><a href="${t("guideFile")}" style="color:var(--accent);font-weight:700">${t("guide")} ›</a></p>
+    ${isIOS && onWeb && !isStandalone ? `<div class="banner"><div>${t("bnHomeFirst")}</div></div>`:""}</div>`;
 }
 
 /* ---------- timer ---------- */
@@ -614,12 +748,12 @@ function tickTimer(){
   f(); tickId=setInterval(f,1000);
 }
 function stopTimer(){
-  const t=data.timer; if(!t) return;
-  const ms=Date.now()-t.start, min=Math.round(ms/60000);
+  const tm=data.timer; if(!tm) return;
+  const ms=Date.now()-tm.start, min=Math.round(ms/60000);
   data.timer=null;
-  if (ms<60000){ commit(); toast("1分未満なので記録しませんでした"); return; }
-  const day=iso(new Date(t.start)); const r=dayRef(day); r.time[t.sid]=(r.time[t.sid]||0)+min;
-  commit(); toast(`${subj(t.sid).name} ${fmtMin(min)} を記録しました`);
+  if (ms<60000){ commit(); toast(t("lt1min")); return; }
+  const day=iso(new Date(tm.start)); const r=dayRef(day); r.time[tm.sid]=(r.time[tm.sid]||0)+min;
+  commit(); toast(t("recorded",{s:subj(tm.sid).name,m:fmtMin(min)}));
 }
 
 /* ---------- editors ---------- */
@@ -628,62 +762,63 @@ let ed=null;
 function openEd(e){ ed=e; renderEd(); }
 function closeEd(){ ed=null; modal.innerHTML=""; }
 function subjPicker(selected){
-  if (!data.subjects.length) return `<div class="empty">先に「設定」で教科を追加してください</div>`;
+  if (!data.subjects.length) return `<div class="empty">${t("pickSubjFirst")}</div>`;
   return `<div class="pickrow">${data.subjects.map(s=>`<button type="button" class="pick subj" data-psubj="${s.id}" aria-pressed="${selected===s.id}" style="${cvColor(s.color)}"><span class="sw" style="width:14px;height:14px"></span>${esc(s.name)}</button>`).join("")}</div>`;
 }
 function renderEd(){
   if(!ed){ modal.innerHTML=""; return; }
   let b="";
-  const del = (key,label)=>`<div class="btns"><button type="button" class="btn danger sm" data-eddel>${ed.confirmDel?"本当に削除する":label}</button></div>${ed.confirmDel&&key?`<p class="note">${key}</p>`:""}`;
-  const save = `<div class="btns"><button type="submit" class="btn primary grow">保存</button><button type="button" class="btn" data-cancel>キャンセル</button></div>`;
+  const del = (note,label)=>`<div class="btns"><button type="button" class="btn danger sm" data-eddel>${ed.confirmDel?t("delSure"):label}</button></div>${ed.confirmDel&&note?`<p class="note">${note}</p>`:""}`;
+  const save = `<div class="btns"><button type="submit" class="btn primary grow">${t("saveBtn")}</button><button type="button" class="btn" data-cancel>${t("cancelBtn")}</button></div>`;
+  const dayBtns = (attr, isOn)=>[1,2,3,4,5,6,0].map(i=>`<button type="button" class="pick dw" ${attr}="${i}" aria-pressed="${isOn(i)}">${DOWN()[i]}</button>`).join("");
   if (ed.kind==="subject"){
     const used = ed.id && (data.routines.some(r=>r.subjectId===ed.id)||data.tasks.some(k=>k.subjectId===ed.id));
-    b = `<h3>${ed.id?"教科を編集":"教科を追加"}</h3>
-      <div class="field"><label for="e-name">教科名</label><input type="text" id="e-name" value="${esc(ed.name)}" maxlength="16" placeholder="例：数学Ⅱ、コミュ英"></div>
-      <div class="field"><span class="lb">色</span><div class="swatches">${PAL.map(p=>`<button type="button" class="swatch" data-color="${p.id}" aria-pressed="${ed.color===p.id}" aria-label="${p.name}" style="--cb:${p.b};--cd:${p.d}"></button>`).join("")}</div>
-        <label class="toggle" style="margin-top:10px;font-weight:500">好きな色を選ぶ <input type="color" id="e-color" value="${/^#/.test(ed.color)?ed.color:"#f7c1cf"}" style="width:52px;height:34px;border:0;background:none;padding:0"></label></div>
-      <div class="field"><span class="lb">プレビュー</span><div><span class="tag" style="${cvColor(ed.color)}">${esc(ed.name||"教科名")}</span></div></div>
-      ${save}${ed.id?del(used?"この教科を使っている課題は「未設定」になります。":"","この教科を削除"):""}`;
+    b = `<h3>${ed.id?t("subjEdit"):t("subjAdd")}</h3>
+      <div class="field"><label for="e-name">${t("subjName")}</label><input type="text" id="e-name" value="${esc(ed.name)}" maxlength="16" placeholder="${t("subjPh")}"></div>
+      <div class="field"><span class="lb">${t("color")}</span><div class="swatches">${PAL.map(p=>`<button type="button" class="swatch" data-color="${p.id}" aria-pressed="${ed.color===p.id}" aria-label="${p[lang]}" style="--cb:${p.b};--cd:${p.d}"></button>`).join("")}</div>
+        <label class="toggle" style="margin-top:10px;font-weight:500">${t("freeColor")} <input type="color" id="e-color" value="${/^#/.test(ed.color)?ed.color:"#f7c1cf"}" style="width:52px;height:34px;border:0;background:none;padding:0"></label></div>
+      <div class="field"><span class="lb">${t("preview")}</span><div><span class="tag" style="${cvColor(ed.color)}">${esc(ed.name||t("subjNamePh"))}</span></div></div>
+      ${save}${ed.id?del(used?t("subjUsedNote"):"",t("subjDel")):""}`;
   } else if (ed.kind==="routine"){
-    b = `<h3>${ed.id?"毎週の課題を編集":"毎週の課題を追加"}</h3>
-      <div class="field"><span class="lb">教科</span>${subjPicker(ed.subjectId)}</div>
-      <div class="field"><label for="e-name">内容</label><input type="text" id="e-name" value="${esc(ed.name)}" maxlength="40" placeholder="例：英単語、数学 課題プリント"></div>
-      <div class="field"><label for="e-memo">メモ（範囲・量など）</label><input type="text" id="e-memo" value="${esc(ed.memo)}" maxlength="40" placeholder="例：50語"></div>
-      <div class="field"><span class="lb">する日の決め方</span><div class="pickrow"><button type="button" class="pick" data-emode="days" aria-pressed="${ed.mode!=="due"}">曜日を決める</button><button type="button" class="pick" data-emode="due" aria-pressed="${ed.mode==="due"}">期限を決める</button></div></div>
+    b = `<h3>${ed.id?t("rEdit"):t("rAdd")}</h3>
+      <div class="field"><span class="lb">${t("subject")}</span>${subjPicker(ed.subjectId)}</div>
+      <div class="field"><label for="e-name">${t("content")}</label><input type="text" id="e-name" value="${esc(ed.name)}" maxlength="40" placeholder="${t("rPh")}"></div>
+      <div class="field"><label for="e-memo">${t("memoAmt")}</label><input type="text" id="e-memo" value="${esc(ed.memo)}" maxlength="40" placeholder="${t("memoPh")}"></div>
+      <div class="field"><span class="lb">${t("howDays")}</span><div class="pickrow"><button type="button" class="pick" data-emode="days" aria-pressed="${ed.mode!=="due"}">${t("byDays")}</button><button type="button" class="pick" data-emode="due" aria-pressed="${ed.mode==="due"}">${t("byDue")}</button></div></div>
       ${ed.mode==="due"
-        ? `<div class="field"><span class="lb">期限（毎週この曜日までにする）</span><div class="pickrow">${[1,2,3,4,5,6,0].map(i=>`<button type="button" class="pick dw" data-due="${i}" aria-pressed="${ed.due===i}">${DOW[i]}</button>`).join("")}</div><p class="note">週の初めから期限まで「今週中にすること」に表示されます。</p></div>`
-        : `<div class="field"><span class="lb">する日を選択</span><div class="pickrow">${[1,2,3,4,5,6,0].map(i=>`<button type="button" class="pick dw" data-dw="${i}" aria-pressed="${ed.days.includes(i)}">${DOW[i]}</button>`).join("")}</div></div>`}
-      <div class="field"><div class="toggle">テスト期間は休みにする<button type="button" class="tg" role="switch" data-pause aria-checked="${!!ed.pauseInTest}" aria-label="テスト期間は休みにする"></button></div><p class="note">テストの${data.prepDays}日前からテスト最終日まで表示しません。</p></div>
-      ${save}${ed.id?del("","この課題を削除"):""}`;
+        ? `<div class="field"><span class="lb">${t("dueWeekly")}</span><div class="pickrow">${dayBtns("data-due",i=>ed.due===i)}</div><p class="note">${t("dueWeeklyNote")}</p></div>`
+        : `<div class="field"><span class="lb">${t("pickDays")}</span><div class="pickrow">${dayBtns("data-dw",i=>ed.days.includes(i))}</div></div>`}
+      <div class="field"><div class="toggle">${t("pauseLabel")}<button type="button" class="tg" role="switch" data-pause aria-checked="${!!ed.pauseInTest}" aria-label="${t("pauseLabel")}"></button></div><p class="note">${t("pauseNote",{n:data.prepDays})}</p></div>
+      ${save}${ed.id?del("",t("rDel")):""}`;
   } else if (ed.kind==="task"){
-    const tests = data.tests.filter(t=>t.end>=todayISO() || t.id===ed.testId);
-    b = `<h3>${ed.id?"課題を編集":ed.testId?"勉強計画を追加":"課題を追加"}</h3>
-      <div class="field"><span class="lb">教科</span>${subjPicker(ed.subjectId)}</div>
-      <div class="field"><label for="e-name">内容</label><input type="text" id="e-name" value="${esc(ed.name)}" maxlength="40" placeholder="例：レポート提出、ワーク p.20〜35"></div>
-      <div class="field"><label for="e-memo">メモ</label><input type="text" id="e-memo" value="${esc(ed.memo)}" maxlength="40" placeholder="なくてもOK"></div>
-      <div class="field"><label for="e-due">期限</label><input type="date" id="e-due" value="${esc(ed.due)}"></div>
-      <div class="field"><label for="e-test">テストの勉強計画にする</label><select id="e-test"><option value="">しない（提出物など）</option>${tests.map(t=>`<option value="${t.id}" ${ed.testId===t.id?"selected":""}>${esc(t.name)}</option>`).join("")}</select></div>
-      ${save}${ed.id?del("","この課題を削除"):""}`;
+    const tests = data.tests.filter(x=>x.end>=todayISO() || x.id===ed.testId);
+    b = `<h3>${ed.id?t("tEdit"):ed.testId?t("tAddPlan"):t("tAdd")}</h3>
+      <div class="field"><span class="lb">${t("subject")}</span>${subjPicker(ed.subjectId)}</div>
+      <div class="field"><label for="e-name">${t("content")}</label><input type="text" id="e-name" value="${esc(ed.name)}" maxlength="40" placeholder="${t("tPh")}"></div>
+      <div class="field"><label for="e-memo">${t("memo")}</label><input type="text" id="e-memo" value="${esc(ed.memo)}" maxlength="40" placeholder="${t("optional")}"></div>
+      <div class="field"><label for="e-due">${t("due")}</label><input type="date" id="e-due" value="${esc(ed.due)}"></div>
+      <div class="field"><label for="e-test">${t("asPlan")}</label><select id="e-test"><option value="">${t("notPlan")}</option>${tests.map(x=>`<option value="${x.id}" ${ed.testId===x.id?"selected":""}>${esc(x.name)}</option>`).join("")}</select></div>
+      ${save}${ed.id?del("",t("rDel")):""}`;
   } else if (ed.kind==="test"){
-    b = `<h3>${ed.id?"テストを編集":"テストを追加"}</h3>
-      <div class="field"><label for="e-name">テスト名</label><input type="text" id="e-name" value="${esc(ed.name)}" maxlength="30" placeholder="例：2学期中間テスト"></div>
-      <div class="frow"><div class="field"><label for="e-start">初日</label><input type="date" id="e-start" value="${esc(ed.start)}"></div><div class="field"><label for="e-end">最終日</label><input type="date" id="e-end" value="${esc(ed.end)}"></div></div>
-      <div class="field"><span class="lb">教科ごとの試験日と範囲（ある教科だけでOK）</span></div>
+    b = `<h3>${ed.id?t("xEdit"):t("xAdd")}</h3>
+      <div class="field"><label for="e-name">${t("xName")}</label><input type="text" id="e-name" value="${esc(ed.name)}" maxlength="30" placeholder="${t("xPh")}"></div>
+      <div class="frow"><div class="field"><label for="e-start">${t("firstDay")}</label><input type="date" id="e-start" value="${esc(ed.start)}"></div><div class="field"><label for="e-end">${t("lastDay")}</label><input type="date" id="e-end" value="${esc(ed.end)}"></div></div>
+      <div class="field"><span class="lb">${t("rangesLabel")}</span></div>
       ${data.subjects.map(s=>{ const r=ed.ranges[s.id]||{}; return `<div class="sblock" style="${cvColor(s.color)}"><div class="sh"><span class="tag" style="${cvColor(s.color)}">${esc(s.name)}</span></div>
-        <div class="field" style="margin:8px 0 6px"><label for="e-rd-${s.id}" style="font-size:13px">試験日</label><input type="date" id="e-rd-${s.id}" data-rd="${s.id}" value="${esc(r.date||"")}"></div>
-        <div class="field" style="margin:0"><label for="e-rt-${s.id}" style="font-size:13px">範囲</label><textarea id="e-rt-${s.id}" data-rt="${s.id}" placeholder="例：教科書 p.40〜78、ワーク p.20〜35">${esc(r.text||"")}</textarea></div></div>`; }).join("") || `<div class="empty">教科を追加すると範囲を入れられます</div>`}
-      ${save}${ed.id?del("このテストの勉強計画もすべて削除されます。","このテストを削除"):""}`;
+        <div class="field" style="margin:8px 0 6px"><label for="e-rd-${s.id}" style="font-size:13px">${t("examDate")}</label><input type="date" id="e-rd-${s.id}" data-rd="${s.id}" value="${esc(r.date||"")}"></div>
+        <div class="field" style="margin:0"><label for="e-rt-${s.id}" style="font-size:13px">${t("range")}</label><textarea id="e-rt-${s.id}" data-rt="${s.id}" placeholder="${t("rangePh")}">${esc(r.text||"")}</textarea></div></div>`; }).join("") || `<div class="empty">${t("addSubjForRange")}</div>`}
+      ${save}${ed.id?del(t("xDelNote"),t("xDel")):""}`;
   } else if (ed.kind==="time"){
-    b = `<h3>勉強時間を記録</h3>
-      <div class="field"><span class="lb">教科</span>${subjPicker(ed.subjectId)}</div>
-      <div class="field"><label for="e-min">時間（分）</label><input type="number" id="e-min" inputmode="numeric" min="1" max="900" value="${ed.min||""}" placeholder="例：45"></div>
-      <div class="pickrow" style="margin:-6px 0 14px">${[15,30,45,60,90,120].map(m=>`<button type="button" class="pick" data-addmin="${m}">${fmtMin(m)}</button>`).join("")}</div>
-      <div class="field"><label for="e-day">日付</label><input type="date" id="e-day" value="${esc(ed.day)}"></div>
+    b = `<h3>${t("timeTitle")}</h3>
+      <div class="field"><span class="lb">${t("subject")}</span>${subjPicker(ed.subjectId)}</div>
+      <div class="field"><label for="e-min">${t("minutes")}</label><input type="number" id="e-min" inputmode="numeric" min="1" max="900" value="${ed.min||""}" placeholder="${t("minPh")}"></div>
+      <div class="pickrow" style="margin:-6px 0 14px">${[15,30,45,60,90,120].map(m=>`<button type="button" class="pick" data-addmin="${m}">＋${fmtMin(m)}</button>`).join("")}</div>
+      <div class="field"><label for="e-day">${t("date")}</label><input type="date" id="e-day" value="${esc(ed.day)}"></div>
       ${save}`;
   } else if (ed.kind==="timerstart"){
-    b = `<h3>何を勉強する？</h3>${subjPicker(ed.subjectId)}
-      <div class="btns"><button type="submit" class="btn primary grow">▶ スタート</button><button type="button" class="btn" data-cancel>キャンセル</button></div>
-      <p class="note">アプリを閉じても時間は計り続けます。</p>`;
+    b = `<h3>${t("whatStudy")}</h3>${subjPicker(ed.subjectId)}
+      <div class="btns"><button type="submit" class="btn primary grow">${t("startBtn")}</button><button type="button" class="btn" data-cancel>${t("cancelBtn")}</button></div>
+      <p class="note">${t("timerNote")}</p>`;
   }
   modal.innerHTML = `<div class="overlay" data-close><form class="sheet" role="dialog" aria-modal="true">${b}</form></div>`;
 }
@@ -719,42 +854,42 @@ modal.addEventListener("click", e=>{
     if (ed.kind==="subject"){ data.subjects=data.subjects.filter(s=>s.id!==ed.id); }
     else if (ed.kind==="routine"){ data.routines=data.routines.filter(r=>r.id!==ed.id); }
     else if (ed.kind==="task"){ data.tasks=data.tasks.filter(k=>k.id!==ed.id); }
-    else if (ed.kind==="test"){ data.tests=data.tests.filter(t=>t.id!==ed.id); data.tasks=data.tasks.filter(k=>k.testId!==ed.id); if(testId===ed.id){ testId=null; view="plan"; } }
-    closeEd(); commit(); toast("削除しました");
+    else if (ed.kind==="test"){ data.tests=data.tests.filter(x=>x.id!==ed.id); data.tasks=data.tasks.filter(k=>k.testId!==ed.id); if(testId===ed.id){ testId=null; view="plan"; } }
+    closeEd(); commit(); toast(t("deleted"));
   }
 });
 modal.addEventListener("submit", e=>{
   e.preventDefault(); readEd();
   const name=(ed.name||"").trim();
-  if (ed.kind==="timerstart"){ if(!ed.subjectId) return toast("教科を選んでね"); data.timer={sid:ed.subjectId,start:Date.now()}; closeEd(); commit(); return; }
+  if (ed.kind==="timerstart"){ if(!ed.subjectId) return toast(t("pickSubj")); data.timer={sid:ed.subjectId,start:Date.now()}; closeEd(); commit(); return; }
   if (ed.kind==="time"){
-    if(!ed.subjectId) return toast("教科を選んでね"); if(!(ed.min>0)) return toast("時間を入れてね"); if(!ed.day) return toast("日付を入れてね");
-    const m=ed.min, r=dayRef(ed.day); r.time[ed.subjectId]=(r.time[ed.subjectId]||0)+m; closeEd(); commit(); toast(`${fmtMin(m)} 記録しました`); return;
+    if(!ed.subjectId) return toast(t("pickSubj")); if(!(ed.min>0)) return toast(t("enterTime")); if(!ed.day) return toast(t("enterDate"));
+    const m=ed.min, r=dayRef(ed.day); r.time[ed.subjectId]=(r.time[ed.subjectId]||0)+m; closeEd(); commit(); toast(t("addedTime",{m:fmtMin(m)})); return;
   }
-  if (!name) return toast("名前を入れてね");
+  if (!name) return toast(t("enterName"));
   if (ed.kind==="subject"){
     if (ed.id){ const s=data.subjects.find(x=>x.id===ed.id); s.name=name; s.color=ed.color; }
     else data.subjects.push({id:uid("s"),name,color:ed.color});
   } else if (ed.kind==="routine"){
-    if(!ed.subjectId) return toast("教科を選んでね");
-    if (ed.mode==="due" ? !(ed.due>=0) : !ed.days.length) return toast(ed.mode==="due"?"期限の曜日を選んでね":"する日を選んでね");
+    if(!ed.subjectId) return toast(t("pickSubj"));
+    if (ed.mode==="due" ? !(ed.due>=0) : !ed.days.length) return toast(ed.mode==="due"?t("pickDue"):t("pickDaysMsg"));
     const item={id:ed.id||uid("r"),subjectId:ed.subjectId,name,memo:(ed.memo||"").trim(),mode:ed.mode==="due"?"due":"days",days:ed.mode==="due"?[]:ed.days.slice().sort((a,b)=>a-b),pauseInTest:!!ed.pauseInTest};
     if (item.mode==="due") item.due=ed.due;
     const i=data.routines.findIndex(x=>x.id===item.id); if(i>=0) data.routines[i]=item; else data.routines.push(item);
   } else if (ed.kind==="task"){
-    if(!ed.subjectId) return toast("教科を選んでね"); if(!ed.due) return toast("期限を入れてね");
+    if(!ed.subjectId) return toast(t("pickSubj")); if(!ed.due) return toast(t("enterDue"));
     const old=data.tasks.find(x=>x.id===ed.id);
     const item={id:ed.id||uid("k"),subjectId:ed.subjectId,name,memo:(ed.memo||"").trim(),due:ed.due,testId:ed.testId||"",doneDate:old?old.doneDate:""};
     const i=data.tasks.findIndex(x=>x.id===item.id); if(i>=0) data.tasks[i]=item; else data.tasks.push(item);
   } else if (ed.kind==="test"){
-    if(!ed.start) return toast("初日を入れてね");
+    if(!ed.start) return toast(t("enterFirst"));
     const end = ed.end && ed.end>=ed.start ? ed.end : ed.start;
     const ranges={}; Object.keys(ed.ranges).forEach(k=>{ const r=ed.ranges[k]; if((r.text||"").trim()||r.date) ranges[k]={date:r.date||"",text:(r.text||"").trim()}; });
     const item={id:ed.id||uid("x"),name,start:ed.start,end,ranges};
     const i=data.tests.findIndex(x=>x.id===item.id); if(i>=0) data.tests[i]=item; else data.tests.push(item);
     if(!ed.id){ testId=item.id; view="test"; }
   }
-  closeEd(); commit(); toast("保存しました");
+  closeEd(); commit(); toast(t("saved"));
 });
 document.addEventListener("keydown", e=>{ if(e.key==="Escape"&&ed) closeEd(); });
 
@@ -763,6 +898,7 @@ function onClick(e){
   const b=e.target.closest("button,[data-selday]"); if(!b) return;
   const d=b.dataset;
   if (d.reset===undefined && !(d.deltask) && confirmKey) confirmKey=null;
+  if (d.lang){ setLang(d.lang); if(data){ data.lang=d.lang; persist(); } render(); return; }
   if (d.selday){ selDay = selDay===d.selday?null:d.selday; render(); return; }
   if (d.view){ view=d.view; openMore=null; try{localStorage.setItem(KEY+"-view",view);}catch(_){}; render(); window.scrollTo(0,0); return; }
   if (d.opentest){ testId=d.opentest; view="test"; render(); window.scrollTo(0,0); return; }
@@ -770,26 +906,26 @@ function onClick(e){
   if (d.toggleweek){ const w=weekRef(d.wk); if(w.done[d.toggleweek]) delete w.done[d.toggleweek]; else w.done[d.toggleweek]=d.date||todayISO(); commit(); return; }
   if (d.toggletask){ const k=data.tasks.find(x=>x.id===d.toggletask); if(k){ k.doneDate = k.doneDate?"":(d.date && d.date<=todayISO()?d.date:todayISO()); commit(); } return; }
   if (d.more){ openMore = openMore===d.more?null:d.more; confirmKey=null; render(); return; }
-  if (d.skip){ openMore=null; const r=dayRef(cur); if(!r.skip.includes(d.skip)) r.skip.push(d.skip); commit(); toast("今日は休みにしました"); return; }
+  if (d.skip){ openMore=null; const r=dayRef(cur); if(!r.skip.includes(d.skip)) r.skip.push(d.skip); commit(); toast(t("skippedToday")); return; }
   if (d.unskip){ const r=dayRef(cur); r.skip=r.skip.filter(x=>x!==d.unskip); commit(); return; }
-  if (d.skipweek){ openMore=null; const w=weekRef(d.wk); if(!w.skip.includes(d.skipweek)) w.skip.push(d.skipweek); commit(); toast("今週は休みにしました"); return; }
+  if (d.skipweek){ openMore=null; const w=weekRef(d.wk); if(!w.skip.includes(d.skipweek)) w.skip.push(d.skipweek); commit(); toast(t("skippedWeek")); return; }
   if (d.unskipweek){ const w=weekRef(d.wk); w.skip=w.skip.filter(x=>x!==d.unskipweek); commit(); return; }
-  if (d.deltask){ if(confirmKey!=="del"+d.deltask){ confirmKey="del"+d.deltask; render(); return; } data.tasks=data.tasks.filter(k=>k.id!==d.deltask); confirmKey=null; openMore=null; commit(); toast("削除しました"); return; }
+  if (d.deltask){ if(confirmKey!=="del"+d.deltask){ confirmKey="del"+d.deltask; render(); return; } data.tasks=data.tasks.filter(k=>k.id!==d.deltask); confirmKey=null; openMore=null; commit(); toast(t("deleted")); return; }
   if (d.edittask){ const k=data.tasks.find(x=>x.id===d.edittask); openMore=null; if(k) openEd(Object.assign({kind:"task"},clone(k))); return; }
   if (d.day){ cur=addDays(cur,+d.day); openMore=null; render(); return; }
   if (d.gotoday!==undefined){ cur=todayISO(); render(); return; }
   if (d.rweek!==undefined){ weekCur = +d.rweek===0?todayISO():addDays(weekCur,7*(+d.rweek)); selDay=null; render(); return; }
   if (d.newtask!==undefined){ openEd({kind:"task",subjectId:"",name:"",memo:"",due:addDays(todayISO(),3),testId:""}); return; }
-  if (d.newplan!==undefined){ const t=testById(testId); const r=t&&t.ranges[d.newplan]; const dd = r&&r.date? addDays(r.date,-1) : (t?addDays(t.start,-1):addDays(todayISO(),3)); openEd({kind:"task",subjectId:d.newplan,name:"",memo:"",due:dd<todayISO()?todayISO():dd,testId:testId||""}); return; }
+  if (d.newplan!==undefined){ const x=testById(testId); const r=x&&x.ranges[d.newplan]; const dd = r&&r.date? addDays(r.date,-1) : (x?addDays(x.start,-1):addDays(todayISO(),3)); openEd({kind:"task",subjectId:d.newplan,name:"",memo:"",due:dd<todayISO()?todayISO():dd,testId:testId||""}); return; }
   if (d.newtest!==undefined){ openEd({kind:"test",name:"",start:addDays(todayISO(),14),end:addDays(todayISO(),17),ranges:{}}); return; }
-  if (d.edittest){ const t=testById(d.edittest); if(t) openEd(Object.assign({kind:"test"},clone(t))); return; }
+  if (d.edittest){ const x=testById(d.edittest); if(x) openEd(Object.assign({kind:"test"},clone(x))); return; }
   if (d.newsubj!==undefined){ const used=new Set(data.subjects.map(s=>s.color)); const c=(PAL.find(p=>!used.has(p.id))||PAL[0]).id; openEd({kind:"subject",name:"",color:c}); return; }
   if (d.editsubj){ const s=data.subjects.find(x=>x.id===d.editsubj); if(s) openEd(Object.assign({kind:"subject"},clone(s))); return; }
   if (d.newroutine!==undefined){ openEd({kind:"routine",subjectId:"",name:"",memo:"",mode:"days",days:[],due:null,pauseInTest:false}); return; }
   if (d.editroutine){ const r=data.routines.find(x=>x.id===d.editroutine); if(r) openEd(Object.assign({kind:"routine",memo:""},clone(r))); return; }
   if (d.timerstartsheet!==undefined){ openEd({kind:"timerstart",subjectId:""}); return; }
   if (d.timerstop!==undefined){ stopTimer(); return; }
-  if (d.timercancel!==undefined){ data.timer=null; commit(); toast("取り消しました"); return; }
+  if (d.timercancel!==undefined){ data.timer=null; commit(); toast(t("canceled")); return; }
   if (d.addtime!==undefined){ openEd({kind:"time",subjectId:"",min:0,day:todayISO()}); return; }
   if (d.wstart){ data.weekStart=+d.wstart; commit(); return; }
   if (d.seed){ data = d.seed==="sample"?sampleData():blankData(); if(d.seed==="blank") view="settings"; commit(); return; }
@@ -800,25 +936,25 @@ function onClick(e){
 main.addEventListener("click", onClick);
 document.getElementById("tabs").addEventListener("click", onClick);
 main.addEventListener("change", e=>{
-  const t=e.target;
-  if (t.id==="f-name"){ data.name=t.value.trim(); commit(); }
-  else if (t.id==="f-prep"){ data.prepDays=+t.value; t.blur(); commit(); }
+  const el=e.target;
+  if (el.id==="f-name"){ data.name=el.value.trim(); commit(); }
+  else if (el.id==="f-prep"){ data.prepDays=+el.value; el.blur(); commit(); }
 });
 
 /* ---------- backup ---------- */
 async function exportData(){
-  const name=`StudyPlanner_バックアップ_${todayISO()}.json`;
+  const name=t("backupName",{d:todayISO()});
   const json=JSON.stringify(Object.assign({app:"study-planner",version:1,savedAt:new Date().toISOString()},data,{lastBackupISO:todayISO()}),null,1);
   const blob=new Blob([json],{type:"application/json"});
-  const done=()=>{ data.lastBackupISO=todayISO(); commit(); toast("バックアップを保存しました"); };
-  try{ const file=new File([blob],name,{type:"application/json"}); if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file],title:"Study Plannerのバックアップ"}); return done(); } }
-  catch(err){ if(err && err.name==="AbortError"){ toast("保存をやめました"); return; } }
+  const done=()=>{ data.lastBackupISO=todayISO(); commit(); toast(t("backupSaved")); };
+  try{ const file=new File([blob],name,{type:"application/json"}); if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file],title:t("backupTitle")}); return done(); } }
+  catch(err){ if(err && err.name==="AbortError"){ toast(t("backupCancel")); return; } }
   const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000); done();
 }
 document.getElementById("importFile").addEventListener("change", e=>{
   const f=e.target.files&&e.target.files[0]; if(!f) return;
   const r=new FileReader();
-  r.onload=()=>{ try{ const j=JSON.parse(r.result); if(!j||!Array.isArray(j.subjects)) throw 0; delete j.app; delete j.version; delete j.savedAt; data=normalize(j); commit(); toast("復元しました"); }catch(err){ toast("このファイルは読み込めませんでした"); } e.target.value=""; };
+  r.onload=()=>{ try{ const j=JSON.parse(r.result); if(!j||!Array.isArray(j.subjects)) throw 0; delete j.app; delete j.version; delete j.savedAt; data=normalize(j); if(data.lang && STR[data.lang]) setLang(data.lang); commit(); toast(t("restored")); }catch(err){ toast(t("badFile")); } e.target.value=""; };
   r.readAsText(f);
 });
 
@@ -826,12 +962,13 @@ let toastT;
 function toast(msg){ const el=document.getElementById("toast"); el.textContent=msg; el.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>{el.hidden=true;},2400); }
 
 let lastToday=todayISO();
-function dayCheck(){ const t=todayISO(); if(t!==lastToday){ if(cur===lastToday) cur=t; lastToday=t; if(!ed) render(); } }
+function dayCheck(){ const x=todayISO(); if(x!==lastToday){ if(cur===lastToday) cur=x; lastToday=x; if(!ed) render(); } }
 setInterval(dayCheck,60000);
 document.addEventListener("visibilitychange",()=>{ if(!document.hidden){ dayCheck(); if(!ed && data) render(); } });
 
 /* ---------- boot ---------- */
 data=load();
+if (data && data.lang && STR[data.lang]) setLang(data.lang);
 try{ const v=localStorage.getItem(KEY+"-view"); if(["today","plan","record","settings"].includes(v)) view=v; }catch(e){}
 render();
 try{ if(navigator.storage&&navigator.storage.persist) navigator.storage.persist(); }catch(e){}
